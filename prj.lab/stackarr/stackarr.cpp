@@ -1,5 +1,10 @@
 #include "stackarr.hpp"
 
+StackArr::StackArr() {
+    capacity_ = 10;
+    data_ = new Complex[capacity_];
+}
+
 StackArr::StackArr(const StackArr& rhs) {
     size_ = rhs.size_;
     capacity_ = rhs.capacity_;
@@ -37,12 +42,12 @@ void StackArr::Push(const Complex& el) {
         capacity_ *= 2;
     }
     size_ += 1;
-    data_[size_] = el;
+    data_[size_ - 1] = el;
 }
 
 Complex& StackArr::Top() {
     if (size_ > 0) {
-        return data_[size_];
+        return data_[size_-1];
     }
     else {
         throw std::out_of_range("Stack is empty!\n");

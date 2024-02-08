@@ -1,22 +1,23 @@
 #pragma once
-#ifndef STACKARR
-#define STACKARR
+#ifndef STACKARR_HPP
+#define STACKARR_HPP
 
 #include <iostream>
+#include <algorithm>
 #include "complex/complex.hpp"
 
 class StackArr {
 public:
-    StackArr() = default;
-    StackArr(const StackArr& rhs);
+    [[nodiscard]] StackArr();
+    [[nodiscard]] StackArr(const StackArr& rhs);
 
     ~StackArr() { delete[] data_; }
-    StackArr& operator=(const StackArr& rhs) noexcept;
+    [[nodiscard]] StackArr& operator=(const StackArr& rhs) noexcept;
 
-    bool IsEmpty() noexcept;
+    [[nodiscard]] bool IsEmpty() noexcept;
     void Pop() noexcept;
     void Push(const Complex& el);
-    Complex& Top();
+    [[nodiscard]] Complex& Top();
 
 private:
     std::ptrdiff_t size_ = 0;
