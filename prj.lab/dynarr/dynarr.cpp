@@ -27,14 +27,16 @@ std::ptrdiff_t DynArr::Size() const noexcept{
 }
 
 DynArr& DynArr::operator=(const DynArr& d) noexcept {
-    if (d.size_ > capacity_) {
-        capacity_ = d.capacity_;
-        delete[] data_;
-        data_ = new float[d.size_];
+    if (this != &d) {
+        if (d.size_ > capacity_) {
+            capacity_ = d.capacity_;
+            delete[] data_;
+            data_ = new float[d.size_];
+        }
+        std::copy(d.data_, d.data_ + d.size_, data_);
+        size_ = d.size_;
+        return *this;
     }
-    std::copy(d.data_, d.data_ + d.size_, data_);
-    size_ = d.size_;
-    return *this;
 }
 
 float& DynArr::operator[](const std::ptrdiff_t i){

@@ -23,4 +23,15 @@ TEST_CASE("stackarr ctor") {
     CHECK_EQ(Complex(8, 9), stack_copy.Top());
     stack_copy.Pop();
     CHECK_EQ(1, stack_copy.IsEmpty());
+    stack_new.Clear();
+    CHECK_EQ(1, stack_new.IsEmpty());
+    stack_new.Push({ 8,9 });
+    stack_new.Push({ 10,0 });
+    stack_new.Push({ 10,4 });
+    CHECK_EQ(0, stack_new.IsEmpty());
+    CHECK_EQ(Complex(10, 4), stack_new.Top());
+    stack_new.Pop();
+    CHECK_EQ(Complex(10, 0), stack_new.Top());
+    stack_new.Clear();
+    CHECK_EQ(1, stack_new.IsEmpty());
 }

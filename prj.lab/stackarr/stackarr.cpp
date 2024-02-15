@@ -1,55 +1,69 @@
 #include "stackarr.hpp"
 
-StackArr::StackArr() {
-    capacity_ = 10;
-    data_ = new Complex[capacity_];
-}
-
 StackArr::StackArr(const StackArr& rhs) {
     size_ = rhs.size_;
-    capacity_ = rhs.capacity_;
+    i_top_ = rhs.i_top_;
     data_ = new Complex[size_];
     std::copy(rhs.data_, rhs.data_ + rhs.size_, data_);
 }
 
 StackArr& StackArr::operator=(const StackArr& rhs) noexcept {
-    if (rhs.size_ > capacity_) {
-        capacity_ = rhs.size_;
-        delete[] data_;
-        data_ = new Complex(rhs.size_);
+    if (this != &rhs) {
+        if (rhs.size_ > size_) {
+            delete[] data_;
+            data_ = new Complex[rhs.size_];
+        }
+        std::copy(rhs.data_, rhs.data_ + rhs.size_, data_);
+        i_top_ = rhs.i_top_;
+        size_ = rhs.size_;
+        return *this;
     }
-    std::copy(rhs.data_, rhs.data_ + rhs.size_, data_);
-    size_ = rhs.size_;
-    return *this;
 }
 
-bool StackArr::IsEmpty() noexcept {
-    return (size_ == 0) ? 1 : 0;
+bool StackArr::IsEmpty() const noexcept {
+    return (i_top_ == -1 ? 1 : 0);
 }
 
 void StackArr::Pop() noexcept {
-    if (size_ > 0) {
-        size_ -= 1;
+    if (!IsEmpty()) {
+        i_top_ -= 1;
     }
 }
 
 void StackArr::Push(const Complex& el) {
-    if (size_ + 1 > capacity_) {
-        Complex* newData = new Complex[capacity_ * 2];
-        std::copy(data_, data_ + size_, newData);
-        delete[] data_;
-        data_ = newData;
-        capacity_ *= 2;
+    if (nullptr == data_) {
+        size_ = 8;
+        data_ = new Complex[size_];
     }
-    size_ += 1;
-    data_[size_ - 1] = el;
+    else if(size_ == i_top_ + 1) {
+        Complex* new_data = new Complex[size_ * 2];
+        std::copy(data_, data_ + size_, new_data);
+        std::swap(data_, new_data);
+        delete[] new_data;
+        size_ *= 2;
+    }
+    i_top_ += 1;
+    data_[i_top_] = el;
 }
 
 Complex& StackArr::Top() {
-    if (size_ > 0) {
-        return data_[size_-1];
+    if (i_top_ >= 0) {
+        return data_[i_top_];
     }
     else {
-        throw std::out_of_range("Stack is empty!\n");
+        throw std::logic_error("Stack is empty!\n");
     }
+}
+
+const Complex& StackArr::Top() const {
+    if (i_top_ >= 0) {
+        return data_[i_top_];
+    }
+    else {
+        throw std::logic_error("Stack is empty!\n");
+    }
+}
+
+void StackArr::Clear() noexcept {
+    i_top_ = -1;
 }
