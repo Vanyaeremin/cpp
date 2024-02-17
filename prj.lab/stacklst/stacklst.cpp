@@ -45,7 +45,12 @@ StackLst& StackLst::operator=(const StackLst& rhs) noexcept {
             vs = vs->next;
             tvs = tvs->next;
         }
-        tvs = nullptr;
+        while (tvs != nullptr) {
+            Node* delete_future = tvs;
+            tvs = tvs->next;
+            delete delete_future;
+        }
+        pr->next = nullptr;
     }
     return *this;
 }
