@@ -11,23 +11,22 @@ class StackLst {
 public:
     [[nodiscard]] StackLst() = default;
     [[nodiscard]] StackLst(const StackLst& rhs);
-    ~StackLst() { 
-        delete head_;
-        head_ = nullptr;
-    }
+    ~StackLst();
 
-    [[nodiscard]] StackLst& operator=(const StackLst& rhs);
+    [[nodiscard]] StackLst& operator=(const StackLst& rhs) noexcept;
     void Push(const Complex& c);
     void Pop() noexcept;
-    bool IsEmpty() noexcept;
-    [[nodiscard]] const Complex& Top();
+    bool IsEmpty() const noexcept;
+    [[nodiscard]] Complex& Top();
+    [[nodiscard]] const Complex& Top() const;
     void Clear() noexcept;
 
 private:
     struct Node {
         Complex v;
         Node* next = nullptr;
-        Node(const Complex& val) : v(val), next(nullptr) {}
+        Node(const Complex& val) : v(val) {}
+        ~Node() = default;
     };
     Node* head_ = nullptr;
 };
