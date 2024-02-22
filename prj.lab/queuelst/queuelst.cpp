@@ -1,20 +1,22 @@
 #include "queuelst.hpp"
 
 QueueLst::QueueLst(const QueueLst& rhs) {
-    Node* newNode = new Node(rhs.head_->v);
-    head_ = newNode;
-    tail_ = newNode;
-    Node* next = rhs.head_->next;
-    Node* cur = tail_;
-    while (next != nullptr) {
-        Node* newNode = new Node(next->v);
-        if (head_->next == nullptr) {
-            head_->next = newNode;
-        }
+    if (rhs.head_ != nullptr) {
+        Node* newNode = new Node(rhs.head_->v);
+        head_ = newNode;
         tail_ = newNode;
-        cur->next = newNode;
-        next = next->next;
-        cur = cur->next;
+        Node* next = rhs.head_->next;
+        Node* cur = tail_;
+        while (next != nullptr) {
+            Node* newNode = new Node(next->v);
+            if (head_->next == nullptr) {
+                head_->next = newNode;
+            }
+            tail_ = newNode;
+            cur->next = newNode;
+            next = next->next;
+            cur = cur->next;
+        }
     }
 }
 

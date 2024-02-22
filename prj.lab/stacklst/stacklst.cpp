@@ -1,15 +1,17 @@
 #include "stacklst.hpp"
 
 StackLst::StackLst(const StackLst& rhs) {
-    Node* newNode = new Node(rhs.head_->v);
-    head_ = newNode;
-    Node* vs = rhs.head_->next;
-    Node* pr = newNode;
-    while (vs != nullptr) {
-        Node* newNode = new Node(vs->v);
-        pr->next = newNode;
-        vs = vs->next;
-        pr = newNode;
+    if (rhs.head_ != nullptr) {
+        Node* newNode = new Node(rhs.head_->v);
+        head_ = newNode;
+        Node* vs = rhs.head_->next;
+        Node* pr = newNode;
+        while (vs != nullptr) {
+            Node* newNode = new Node(vs->v);
+            pr->next = newNode;
+            vs = vs->next;
+            pr = newNode;
+        }
     }
 }
 
