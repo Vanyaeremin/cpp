@@ -12,7 +12,7 @@ public:
     [[nodiscard]] QueueLst() = default;
     [[nodiscard]] QueueLst(const QueueLst& rhs);
     ~QueueLst();
-    QueueLst& operator=(const QueueLst& rhs);
+    [[nodiscard]] QueueLst& operator=(const QueueLst& rhs);
 
     void Push(const Complex& c);
     void Pop() noexcept;
