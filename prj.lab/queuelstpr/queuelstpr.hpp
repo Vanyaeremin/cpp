@@ -10,7 +10,9 @@ public:
     [[nodiscard]] QueueLstPr() = default;
     ~QueueLstPr();
     [[nodiscard]] QueueLstPr(const QueueLstPr& rhs);
+    [[nodiscard]] QueueLstPr(QueueLstPr&& rhs);
     [[nodiscard]] QueueLstPr& operator=(const QueueLstPr& rhs);
+    [[nodiscard]] QueueLstPr& operator=(QueueLstPr&& rhs);
 
     void Push(const float& f);
     void Pop() noexcept;

@@ -15,12 +15,26 @@ StackLst::StackLst(const StackLst& rhs) {
     }
 }
 
+StackLst::StackLst(StackLst&& rhs) {
+    head_ = rhs.head_;
+    rhs.head_ = nullptr;
+}
+
 StackLst::~StackLst() {
     while (head_ != nullptr) {
         Node* delete_future = head_;
         head_ = head_->next;
         delete delete_future;
     }
+}
+
+StackLst& StackLst::operator=(StackLst&& rhs) {
+    if (this != &rhs) {
+        Clear();
+        head_ = rhs.head_;
+        rhs.head_ = nullptr;
+    }
+    return *this;
 }
 
 StackLst& StackLst::operator=(const StackLst& rhs) noexcept {

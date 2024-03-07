@@ -20,6 +20,24 @@ QueueLst::QueueLst(const QueueLst& rhs) {
     }
 }
 
+QueueLst::QueueLst(QueueLst&& rhs) noexcept {
+    head_ = rhs.head_;
+    tail_ = rhs.tail_;
+    rhs.head_ = nullptr;
+    rhs.tail_ = nullptr;
+}
+
+QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept {
+    if (this != &rhs) {
+        Clear();
+        head_ = rhs.head_;
+        tail_ = rhs.tail_;
+        rhs.head_ = nullptr;
+        rhs.tail_ = nullptr;
+    }
+    return *this;
+}
+
 QueueLst::~QueueLst() {
     while (head_ != nullptr) {
         Node* delete_future = head_;

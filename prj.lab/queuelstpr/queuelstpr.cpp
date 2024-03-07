@@ -15,6 +15,11 @@ QueueLstPr::QueueLstPr(const QueueLstPr& rhs) {
     }
 }
 
+QueueLstPr::QueueLstPr(QueueLstPr&& rhs) {
+    head_ = rhs.head_;
+    rhs.head_ = nullptr;
+}
+
 QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
     if (this != &rhs) {
         Node* cur = head_;
@@ -43,6 +48,15 @@ QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
             future_delete = nullptr;
         }
         pr->next = nullptr;
+    }
+    return *this;
+}
+
+QueueLstPr& QueueLstPr::operator=(QueueLstPr&& rhs) {
+    if (this != &rhs) {
+        Clear();
+        head_ = rhs.head_;
+        rhs.head_ = nullptr;
     }
     return *this;
 }

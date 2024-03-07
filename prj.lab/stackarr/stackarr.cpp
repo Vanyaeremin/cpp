@@ -7,6 +7,13 @@ StackArr::StackArr(const StackArr& rhs) {
     std::copy(rhs.data_, rhs.data_ + rhs.size_, data_);
 }
 
+StackArr::StackArr(StackArr&& rhs) noexcept {
+    size_ = rhs.size_;
+    i_top_ = rhs.i_top_;
+    data_ = rhs.data_;
+    rhs.data_ = nullptr;
+}
+
 StackArr& StackArr::operator=(const StackArr& rhs) noexcept {
     if (this != &rhs) {
         if (rhs.size_ > size_) {
@@ -18,6 +25,13 @@ StackArr& StackArr::operator=(const StackArr& rhs) noexcept {
         size_ = rhs.size_;
         return *this;
     }
+}
+
+StackArr& StackArr::operator=(StackArr&& d) noexcept {
+    if (this != &d) {
+        std::swap(data_, d.data_);
+    }
+    return *this;
 }
 
 bool StackArr::IsEmpty() const noexcept {
