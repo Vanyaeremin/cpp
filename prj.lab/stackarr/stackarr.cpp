@@ -8,10 +8,9 @@ StackArr::StackArr(const StackArr& rhs) {
 }
 
 StackArr::StackArr(StackArr&& rhs) noexcept {
-    size_ = rhs.size_;
-    i_top_ = rhs.i_top_;
-    data_ = rhs.data_;
-    rhs.data_ = nullptr;
+    std::swap(data_, rhs.data_);
+    std::swap(size_, rhs.size_);
+    std::swap(i_top_, rhs.i_top_);
 }
 
 StackArr& StackArr::operator=(const StackArr& rhs) noexcept {
@@ -30,6 +29,8 @@ StackArr& StackArr::operator=(const StackArr& rhs) noexcept {
 StackArr& StackArr::operator=(StackArr&& d) noexcept {
     if (this != &d) {
         std::swap(data_, d.data_);
+        std::swap(size_, d.size_);
+        std::swap(i_top_, d.i_top_);
     }
     return *this;
 }

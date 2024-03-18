@@ -21,19 +21,14 @@ QueueLst::QueueLst(const QueueLst& rhs) {
 }
 
 QueueLst::QueueLst(QueueLst&& rhs) noexcept {
-    head_ = rhs.head_;
-    tail_ = rhs.tail_;
-    rhs.head_ = nullptr;
-    rhs.tail_ = nullptr;
+    std::swap(head_, rhs.head_);
+    std::swap(tail_, rhs.tail_);
 }
 
 QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept {
     if (this != &rhs) {
-        Clear();
-        head_ = rhs.head_;
-        tail_ = rhs.tail_;
-        rhs.head_ = nullptr;
-        rhs.tail_ = nullptr;
+        std::swap(head_, rhs.head_);
+        std::swap(tail_, rhs.tail_);
     }
     return *this;
 }

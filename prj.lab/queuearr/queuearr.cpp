@@ -18,15 +18,18 @@ QueueArr::QueueArr(const QueueArr& rhs) {
 }
 
 QueueArr::QueueArr(QueueArr&& d) noexcept {
-    capacity_ = d.capacity_;
-    head_ = d.head_;
-    tail_ = d.tail_;
+    std::swap(capacity_, d.capacity_);
     std::swap(data_, d.data_);
+    std::swap(tail_, d.tail_);
+    std::swap(head_, d.head_);
 }
 
 QueueArr& QueueArr::operator=(QueueArr&& d) noexcept {
     if (this != &d) {
+        std::swap(capacity_, d.capacity_);
         std::swap(data_, d.data_);
+        std::swap(tail_, d.tail_);
+        std::swap(head_, d.head_);
     }
     return *this;
 }

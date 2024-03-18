@@ -15,9 +15,8 @@ StackLst::StackLst(const StackLst& rhs) {
     }
 }
 
-StackLst::StackLst(StackLst&& rhs) {
-    head_ = rhs.head_;
-    rhs.head_ = nullptr;
+StackLst::StackLst(StackLst&& rhs) noexcept{
+    std::swap(head_, rhs.head_);
 }
 
 StackLst::~StackLst() {
@@ -28,11 +27,9 @@ StackLst::~StackLst() {
     }
 }
 
-StackLst& StackLst::operator=(StackLst&& rhs) {
+StackLst& StackLst::operator=(StackLst&& rhs) noexcept {
     if (this != &rhs) {
-        Clear();
-        head_ = rhs.head_;
-        rhs.head_ = nullptr;
+        std::swap(head_, rhs.head_);
     }
     return *this;
 }

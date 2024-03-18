@@ -15,9 +15,8 @@ QueueLstPr::QueueLstPr(const QueueLstPr& rhs) {
     }
 }
 
-QueueLstPr::QueueLstPr(QueueLstPr&& rhs) {
-    head_ = rhs.head_;
-    rhs.head_ = nullptr;
+QueueLstPr::QueueLstPr(QueueLstPr&& rhs) noexcept {
+    std::swap(head_, rhs.head_);
 }
 
 QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
@@ -52,11 +51,9 @@ QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
     return *this;
 }
 
-QueueLstPr& QueueLstPr::operator=(QueueLstPr&& rhs) {
+QueueLstPr& QueueLstPr::operator=(QueueLstPr&& rhs) noexcept{
     if (this != &rhs) {
-        Clear();
-        head_ = rhs.head_;
-        rhs.head_ = nullptr;
+        std::swap(head_, rhs.head_);
     }
     return *this;
 }
