@@ -11,14 +11,14 @@ class StackArr {
 public:
     [[nodiscard]] StackArr() = default;
     [[nodiscard]] StackArr(const StackArr& rhs);
-    [[nodiscard]] StackArr(StackArr&&) noexcept;
+    [[nodiscard]] StackArr(StackArr&& rhs) noexcept;
 
     ~StackArr() { 
         delete[] data_;
         data_ = nullptr;
     }
     [[nodiscard]] StackArr& operator=(const StackArr& rhs) noexcept;
-    [[nodiscard]] StackArr& operator=(StackArr&&) noexcept;
+    [[nodiscard]] StackArr& operator=(StackArr&& rhs) noexcept;
 
     bool IsEmpty() const noexcept;
     void Pop() noexcept;

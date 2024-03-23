@@ -14,8 +14,8 @@ public:
     [[nodiscard]] QueueArr(const QueueArr& rhs);
     ~QueueArr() = default;
     [[nodiscard]] QueueArr& operator=(const QueueArr& rhs);
-    [[nodiscard]] QueueArr& operator=(QueueArr&&) noexcept;
-    [[nodiscard]] QueueArr(QueueArr&&) noexcept;
+    [[nodiscard]] QueueArr& operator=(QueueArr&& d) noexcept;
+    [[nodiscard]] QueueArr(QueueArr&& d) noexcept;
 
     void Push(const Complex& c);
     void Pop() noexcept;
