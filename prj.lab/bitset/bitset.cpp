@@ -42,12 +42,7 @@ void BitSet::Fill(const bool val) noexcept {
 
 BitSet& BitSet::operator~() {
     for (std::size_t i = 0; i < size_; ++i) {
-        if (bits_[i] == 0) { 
-            bits_[i] = 1; 
-        }
-        else {
-            bits_[i] = 0;
-        }
+        bits_[i] = !bits_[i];
     }
     return *this;
 }
