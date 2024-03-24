@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <memory>
 #include <algorithm>
 #include <cstddef>
 #include <iosfwd>
@@ -15,10 +16,7 @@ public:
     [[nodiscard]] DynArr(const DynArr& d);
     [[nodiscard]] DynArr(DynArr&& d) noexcept;
     [[nodiscard]] explicit DynArr(std::ptrdiff_t size);
-    ~DynArr() { 
-        delete[] data_;
-        data_ = nullptr;
-    }
+    ~DynArr() = default;
 
     [[nodiscard]] DynArr& operator=(const DynArr& d) noexcept;
     [[nodiscard]] DynArr& operator=(DynArr&& d) noexcept;
@@ -32,8 +30,7 @@ public:
 private:
     std::ptrdiff_t size_ = 0;
     std::ptrdiff_t capacity_ = 0;
-
-    float* data_ = nullptr;
+    std::unique_ptr<float[]> data_ = std::make_unique<float[]>(capacity_);
 };
 
 #endif

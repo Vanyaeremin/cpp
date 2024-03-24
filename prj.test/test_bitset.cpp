@@ -61,9 +61,30 @@ TEST_CASE("bitset ctor") {
 
     b1.Fill(1);
     CHECK_EQ(b1 == ~b2, 1);
-    b2.Fill(0);
+    BitSet b33 = ~b2;
+    CHECK_EQ(b33.Get(0), 1);
+    CHECK_EQ(b33.Get(1), 1);
+    CHECK_EQ(b33.Get(2), 1);
+    CHECK_EQ(b33.Get(3), 1);
+    CHECK_EQ(b33.Get(4), 1);
+    CHECK_EQ(b33.Get(5), 1);
+    CHECK_EQ(b33.Get(6), 1);
+    CHECK_EQ(b33.Get(7), 1);
+    CHECK_EQ(b33.Get(8), 1);
+    CHECK_EQ(b33.Get(9), 1);
     CHECK_EQ(~b1 == b2, 1);
-    CHECK_EQ(~b1 == ~b2, 1);
+    b33 = ~b1;
+    CHECK_EQ(b33.Get(0), 0);
+    CHECK_EQ(b33.Get(1), 0);
+    CHECK_EQ(b33.Get(2), 0);
+    CHECK_EQ(b33.Get(3), 0);
+    CHECK_EQ(b33.Get(4), 0);
+    CHECK_EQ(b33.Get(5), 0);
+    CHECK_EQ(b33.Get(6), 0);
+    CHECK_EQ(b33.Get(7), 0);
+    CHECK_EQ(b33.Get(8), 0);
+    CHECK_EQ(b33.Get(9), 0);
+    CHECK_EQ(~b1 != ~b2, 1);
 
     BitSet b3(13);
     b3.Set(0, 1);
@@ -91,7 +112,7 @@ TEST_CASE("bitset ctor") {
     b4.Set(7, 1);
     b4.Set(8, 0);
 
-    b3 | b4;
+    b3 |= b4;
     CHECK_EQ(b3.Get(0), 1);
     CHECK_EQ(b3.Get(1), 0);
     CHECK_EQ(b3.Get(2), 1);
@@ -106,7 +127,7 @@ TEST_CASE("bitset ctor") {
     CHECK_EQ(b3.Get(11), 1);
     CHECK_EQ(b3.Get(12), 1);
 
-    b3 & b4;
+    b3 &= b4;
     CHECK_EQ(b3.Get(0), 0);
     CHECK_EQ(b3.Get(1), 0);
     CHECK_EQ(b3.Get(2), 0);
@@ -126,7 +147,7 @@ TEST_CASE("bitset ctor") {
     b3.Set(2, 1);
     b3.Set(4, 0);
 
-    b3 ^ b4;
+    b3 ^= b4;
     CHECK_EQ(b3.Get(0), 1);
     CHECK_EQ(b3.Get(1), 0);
     CHECK_EQ(b3.Get(2), 1);
@@ -140,4 +161,49 @@ TEST_CASE("bitset ctor") {
     CHECK_EQ(b3.Get(10), 0);
     CHECK_EQ(b3.Get(11), 0);
     CHECK_EQ(b3.Get(12), 0);
+
+    BitSet b5 = b3 & b4;
+    CHECK_EQ(b5.Get(0), 0);
+    CHECK_EQ(b5.Get(1), 0);
+    CHECK_EQ(b5.Get(2), 0);
+    CHECK_EQ(b5.Get(3), 0);
+    CHECK_EQ(b5.Get(4), 1);
+    CHECK_EQ(b5.Get(5), 0);
+    CHECK_EQ(b5.Get(6), 1);
+    CHECK_EQ(b5.Get(7), 0);
+    CHECK_EQ(b5.Get(8), 0);
+    CHECK_EQ(b5.Get(9), 0);
+    CHECK_EQ(b5.Get(10), 0);
+    CHECK_EQ(b5.Get(11), 0);
+    CHECK_EQ(b5.Get(12), 0);
+
+    b5 = b3 | b4;
+    CHECK_EQ(b5.Get(0), 1);
+    CHECK_EQ(b5.Get(1), 0);
+    CHECK_EQ(b5.Get(2), 1);
+    CHECK_EQ(b5.Get(3), 0);
+    CHECK_EQ(b5.Get(4), 1);
+    CHECK_EQ(b5.Get(5), 1);
+    CHECK_EQ(b5.Get(6), 1);
+    CHECK_EQ(b5.Get(7), 0);
+    CHECK_EQ(b5.Get(8), 1);
+    CHECK_EQ(b5.Get(9), 0);
+    CHECK_EQ(b5.Get(10), 0);
+    CHECK_EQ(b5.Get(11), 1);
+    CHECK_EQ(b5.Get(12), 0);
+
+    b5 = b3 ^ b4;
+    CHECK_EQ(b5.Get(0), 1);
+    CHECK_EQ(b5.Get(1), 0);
+    CHECK_EQ(b5.Get(2), 1);
+    CHECK_EQ(b5.Get(3), 0);
+    CHECK_EQ(b5.Get(4), 0);
+    CHECK_EQ(b5.Get(5), 1);
+    CHECK_EQ(b5.Get(6), 0);
+    CHECK_EQ(b5.Get(7), 0);
+    CHECK_EQ(b5.Get(8), 1);
+    CHECK_EQ(b5.Get(9), 0);
+    CHECK_EQ(b5.Get(10), 0);
+    CHECK_EQ(b5.Get(11), 1);
+    CHECK_EQ(b5.Get(12), 0);
 }

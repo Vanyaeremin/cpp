@@ -40,11 +40,12 @@ void BitSet::Fill(const bool val) noexcept {
     bits_ = std::vector<std::uint32_t>(size_, val);
 }
 
-BitSet& BitSet::operator~() {
+BitSet BitSet::operator~() {
+    BitSet otr(size_);
     for (std::size_t i = 0; i < size_; ++i) {
-        bits_[i] = !bits_[i];
+        otr.bits_[i] = !bits_[i];
     }
-    return *this;
+    return otr;
 }
 
 std::vector<std::uint32_t> BitSet::same_size(const BitSet& v1, const BitSet& v2) {
@@ -54,7 +55,7 @@ std::vector<std::uint32_t> BitSet::same_size(const BitSet& v1, const BitSet& v2)
     return data;
 }
 
-BitSet& BitSet::operator|(const BitSet& rhs) {
+BitSet& BitSet::operator|=(const BitSet& rhs) {
     std::vector<std::uint32_t> data1 = same_size(*this, rhs);
     std::vector<std::uint32_t> data2 = same_size(rhs, *this);
     this->Resize(data1.size());
@@ -64,7 +65,13 @@ BitSet& BitSet::operator|(const BitSet& rhs) {
     return *this;
 }
 
-BitSet& BitSet::operator&(const BitSet& rhs) {
+BitSet operator|(const BitSet& lhs, const BitSet& rhs) {
+    BitSet result(lhs);
+    result |= rhs;
+    return result;
+}
+
+BitSet& BitSet::operator&=(const BitSet& rhs) {
     std::vector<std::uint32_t> data1 = same_size(*this, rhs);
     std::vector<std::uint32_t> data2 = same_size(rhs, *this);
     this->Resize(data1.size());
@@ -74,7 +81,13 @@ BitSet& BitSet::operator&(const BitSet& rhs) {
     return *this;
 }
 
-BitSet& BitSet::operator^(const BitSet& rhs) {
+BitSet operator&(const BitSet& lhs, const BitSet& rhs) {
+    BitSet result(lhs);
+    result &= rhs;
+    return result;
+}
+
+BitSet& BitSet::operator^=(const BitSet& rhs) {
     std::vector<std::uint32_t> data1 = same_size(*this, rhs);
     std::vector<std::uint32_t> data2 = same_size(rhs, *this);
     this->Resize(data1.size());
@@ -82,4 +95,10 @@ BitSet& BitSet::operator^(const BitSet& rhs) {
         bits_[i] = (data1[i] ^ data2[i]);
     }
     return *this;
+}
+
+BitSet operator^(const BitSet& lhs, const BitSet& rhs) {
+    BitSet result(lhs);
+    result ^= rhs;
+    return result;
 }

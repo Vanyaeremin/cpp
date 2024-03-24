@@ -3,8 +3,8 @@
 DynArr::DynArr(const DynArr& d) {
     size_ = d.size_;
     capacity_ = d.capacity_;
-    data_ = new float[size_];
-    std::copy(d.data_, d.data_ + d.size_, data_);
+    data_ = std::make_unique<float[]>(capacity_);
+    std::copy(d.data_.get(), d.data_.get() + d.size_, data_.get());
 }
 
 DynArr::DynArr(DynArr&& d) noexcept {
@@ -17,8 +17,8 @@ DynArr::DynArr(const std::ptrdiff_t size){
     if (size > 0) {
         size_ = size;
         capacity_ = size;
-        data_ = new float[size];
-        std::fill(data_, data_ + size, 0);
+        data_ = std::make_unique<float[]>(capacity_);
+        std::fill(data_.get(), data_.get() + size, 0);
     }
     else if(size<0) {
         throw std::invalid_argument("Negative array size\n");
@@ -36,10 +36,9 @@ DynArr& DynArr::operator=(const DynArr& d) noexcept {
     if (this != &d) {
         if (d.size_ > capacity_) {
             capacity_ = d.capacity_;
-            delete[] data_;
-            data_ = new float[d.size_];
+            data_ = std::make_unique<float[]>(capacity_);
         }
-        std::copy(d.data_, d.data_ + d.size_, data_);
+        std::copy(d.data_.get(), d.data_.get() + d.size_, data_.get());
         size_ = d.size_;
         return *this;
     }
@@ -81,14 +80,13 @@ const float& DynArr::operator[](const std::ptrdiff_t i) const {
 void DynArr::Resize(std::ptrdiff_t size) {
     if (size > 0) {
         if (size > size_ && size <= capacity_) {
-            std::fill(data_ + size_, data_ + size, 0);
+            std::fill(data_.get() + size_, data_.get() + size, 0);
         }
         else if (size > capacity_){
-            float* new_data = new float[size];
-            std::copy(data_, data_ + size_, new_data);
-            std::fill(new_data + size_, new_data + size, 0);
-            delete[] data_;
-            data_ = new_data;
+            std::unique_ptr<float[]> new_data = std::make_unique<float[]>(size);
+            std::copy(data_.get(), data_.get() + size_, new_data.get());
+            std::fill(new_data.get() + size_, new_data.get() + size, 0);
+            std::swap(data_, new_data);
             capacity_ = size;
         }
         size_ = size;

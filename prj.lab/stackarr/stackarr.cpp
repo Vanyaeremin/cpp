@@ -3,8 +3,8 @@
 StackArr::StackArr(const StackArr& rhs) {
     size_ = rhs.size_;
     i_top_ = rhs.i_top_;
-    data_ = new Complex[size_];
-    std::copy(rhs.data_, rhs.data_ + rhs.size_, data_);
+    data_ = std::make_unique<Complex[]>(size_);
+    std::copy(rhs.data_.get(), rhs.data_.get() + rhs.size_, data_.get());
 }
 
 StackArr::StackArr(StackArr&& rhs) noexcept {
@@ -16,10 +16,9 @@ StackArr::StackArr(StackArr&& rhs) noexcept {
 StackArr& StackArr::operator=(const StackArr& rhs) noexcept {
     if (this != &rhs) {
         if (rhs.size_ > size_) {
-            delete[] data_;
-            data_ = new Complex[rhs.size_];
+            data_ = std::make_unique<Complex[]>(rhs.size_);
         }
-        std::copy(rhs.data_, rhs.data_ + rhs.size_, data_);
+        std::copy(rhs.data_.get(), rhs.data_.get() + rhs.size_, data_.get());
         i_top_ = rhs.i_top_;
         size_ = rhs.size_;
         return *this;
@@ -46,15 +45,14 @@ void StackArr::Pop() noexcept {
 }
 
 void StackArr::Push(const Complex& el) {
-    if (nullptr == data_) {
+    if (i_top_ == -1) {
         size_ = 8;
-        data_ = new Complex[size_];
+        data_ = std::make_unique<Complex[]>(size_);
     }
     else if(size_ == i_top_ + 1) {
-        Complex* new_data = new Complex[size_ * 2];
-        std::copy(data_, data_ + size_, new_data);
+        std::unique_ptr<Complex[]> new_data = std::make_unique<Complex[]>(size_*2);
+        std::copy(data_.get(), data_.get() + size_, new_data.get());
         std::swap(data_, new_data);
-        delete[] new_data;
         size_ *= 2;
     }
     i_top_ += 1;

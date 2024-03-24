@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cstddef>
+#include <memory>
 #include "complex/complex.hpp"
 
 class StackArr {
@@ -13,10 +14,7 @@ public:
     [[nodiscard]] StackArr(const StackArr& rhs);
     [[nodiscard]] StackArr(StackArr&& rhs) noexcept;
 
-    ~StackArr() { 
-        delete[] data_;
-        data_ = nullptr;
-    }
+    ~StackArr() = default;
     [[nodiscard]] StackArr& operator=(const StackArr& rhs) noexcept;
     [[nodiscard]] StackArr& operator=(StackArr&& rhs) noexcept;
 
@@ -30,7 +28,7 @@ public:
 private:
     std::ptrdiff_t size_ = 0;
     std::ptrdiff_t i_top_ = -1;
-    Complex* data_ = nullptr;
+    std::unique_ptr<Complex[]> data_ = std::make_unique<Complex[]>(size_);
 };
 
 #endif

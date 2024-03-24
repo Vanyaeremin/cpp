@@ -26,15 +26,21 @@ public:
     void Set(const int32_t idx, const bool val);
     void Fill(const bool val) noexcept;
 
-    [[nodiscard]] BitSet& operator~();
-    [[nodiscard]] BitSet& operator|(const BitSet& rhs);
-    [[nodiscard]] BitSet& operator&(const BitSet& rhs);
-    [[nodiscard]] BitSet& operator^(const BitSet& rhs);
+    [[nodiscard]] BitSet operator~();
+    [[nodiscard]] BitSet& operator|=(const BitSet& rhs);
+    [[nodiscard]] BitSet& operator&=(const BitSet& rhs);
+    [[nodiscard]] BitSet& operator^=(const BitSet& rhs);
     std::vector<std::uint32_t> same_size(const BitSet& v1, const BitSet& v2);
 
 private:
     std::int32_t size_ = 0;
     std::vector<std::uint32_t> bits_;
 };
+
+[[nodiscard]] BitSet operator&(const BitSet& lhs, const BitSet& rhs);
+
+[[nodiscard]] BitSet operator|(const BitSet& lhs, const BitSet& rhs);
+
+[[nodiscard]] BitSet operator^(const BitSet& lhs, const BitSet& rhs);
 
 #endif
