@@ -102,3 +102,4 @@ BitSet operator^(const BitSet& lhs, const BitSet& rhs) {
     result ^= rhs;
     return result;
 }
+

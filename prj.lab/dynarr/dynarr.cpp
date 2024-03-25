@@ -3,7 +3,7 @@
 DynArr::DynArr(const DynArr& d) {
     size_ = d.size_;
     capacity_ = d.capacity_;
-    data_ = std::make_unique<float[]>(capacity_);
+    data_ = std::make_unique<float[]>(size_);
     std::copy(d.data_.get(), d.data_.get() + d.size_, data_.get());
 }
 
@@ -17,7 +17,7 @@ DynArr::DynArr(const std::ptrdiff_t size){
     if (size > 0) {
         size_ = size;
         capacity_ = size;
-        data_ = std::make_unique<float[]>(capacity_);
+        data_ = std::make_unique<float[]>(size);
         std::fill(data_.get(), data_.get() + size, 0);
     }
     else if(size<0) {
@@ -36,7 +36,7 @@ DynArr& DynArr::operator=(const DynArr& d) noexcept {
     if (this != &d) {
         if (d.size_ > capacity_) {
             capacity_ = d.capacity_;
-            data_ = std::make_unique<float[]>(capacity_);
+            data_ = std::make_unique<float[]>(d.size_);
         }
         std::copy(d.data_.get(), d.data_.get() + d.size_, data_.get());
         size_ = d.size_;
