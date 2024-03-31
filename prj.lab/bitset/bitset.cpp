@@ -1,5 +1,34 @@
 #include "bitset.hpp"
 
+BitSet::BiA::operator bool() {
+    return static_cast<bool>(b_.bits_[i_]);
+}
+
+bool BitSet::BiA::operator=(const bool value) {
+    b_.bits_[i_] = value;
+    return bool(*this);
+}
+
+BitSet::BiA& BitSet::BiA::operator=(const BiA& bia) {
+    b_.bits_[i_] = bia.b_.bits_[bia.i_];
+    return *this;
+}
+
+const bool BitSet::BiA::operator=(const bool value) const {
+    b_.bits_[i_] = value;
+    return static_cast<bool>(b_.bits_[i_]);
+}
+
+BitSet::BiA BitSet::operator[](int32_t i) {
+    BiA bia(i, *this);
+    return bia;
+}
+
+const BitSet::BiA& BitSet::BiA::operator=(const BiA& bia) const {
+    b_.bits_[i_] = bia.b_.bits_[bia.i_];
+    return *this;
+}
+
 bool BitSet::operator==(const BitSet& rhs) const noexcept {
     return ((bits_ == rhs.bits_) && (size_ == rhs.size_));
 }

@@ -207,3 +207,51 @@ TEST_CASE("bitset ctor") {
     CHECK_EQ(b5.Get(11), 1);
     CHECK_EQ(b5.Get(12), 0);
 }
+
+TEST_CASE("CHECK_BIA") {
+    BitSet b3(13);
+    b3.Set(0, 1);
+    b3.Set(1, 0);
+    b3.Set(2, 1);
+    b3.Set(3, 0);
+    b3.Set(4, 1);
+    b3.Set(5, 0);
+    b3.Set(6, 1);
+    b3.Set(7, 0);
+    b3.Set(8, 1);
+    b3.Set(9, 0);
+    b3.Set(10, 1);
+    b3.Set(11, 0);
+    b3.Set(12, 1);
+    CHECK_EQ(b3.Get(0), 1);
+    CHECK_EQ(b3.Get(4), 1);
+    b3[0] = 0;
+    b3[4] = 0;
+    b3[11] = 1;
+    CHECK_EQ(b3.Get(0), 0);
+    CHECK_EQ(b3.Get(4), 0);
+    CHECK_EQ(b3.Get(11), 1);
+    b3[11] = 0;
+    CHECK_EQ(b3.Get(11), 0);
+    b3.Fill(0);
+    BitSet b4(9);
+    b4.Set(0, 1);
+    b4.Set(1, 1);
+    b4.Set(2, 1);
+    b4.Set(3, 1);
+    b4.Set(4, 1);
+    b4.Set(5, 1);
+    b4.Set(6, 1);
+    b4.Set(7, 1);
+    b4.Set(8, 1);
+    b3[0] = b4[0];
+    b3[1] = b4[1];
+    b3[8] = b4[8];
+    CHECK_EQ(b3.Get(0), 1);
+    CHECK_EQ(b3.Get(1), 1);
+    CHECK_EQ(b3.Get(8), 1);
+    CHECK_EQ(b4.Get(0), 1);
+    CHECK_EQ(b4.Get(1), 1);
+    CHECK_EQ(b4.Get(8), 1);
+    CHECK_EQ(b3.Get(9), 0);
+}

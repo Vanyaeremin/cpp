@@ -9,8 +9,8 @@
 #include <stdexcept>
 
 class BitSet {
-//private:
-//    class BiA;
+private:
+    class BiA;
 public:
     BitSet() = default;
     BitSet(const BitSet& rhs) = default;
@@ -27,10 +27,7 @@ public:
     [[nodiscard]] bool Get(const int32_t idx) const;
     void Set(const int32_t idx, const bool val);
     void Fill(const bool val) noexcept;
-    //BiA operator[](int32_t i) {
-    //    BiA bia(i, *this);
-    //    return bia;
-    //}
+    BiA operator[](int32_t i);
 
     [[nodiscard]] BitSet operator~();
     [[nodiscard]] BitSet& operator|=(const BitSet& rhs);
@@ -39,21 +36,22 @@ public:
     std::vector<std::uint32_t> same_size(const BitSet& v1, const BitSet& v2);
 
 private:
-    //class BiA {
-    //public:
-    //    BiA() = default;
-    //    BiA(const std::int32_t i, BitSet& b) : i_(i), b_{b} {}
-    //    ~BiA() = default;
+    class BiA {
+    public:
+        [[nodiscard]] BiA() = default;
+        [[nodiscard]] BiA(const std::int32_t i, BitSet& b) : i_(i), b_{b} {}
+        ~BiA() = default;
 
-    //    operator bool() {
+        explicit operator bool();
+        [[nodiscard]] bool operator=(const bool value);
+        [[nodiscard]] BiA& operator=(const BiA& bia);
+        [[nodiscard]] const bool operator= (const bool value) const;
+        [[nodiscard]] const BiA& operator= (const BiA& bia) const;
 
-    //    }
-    //    bool operator= (const bool value) {}
-    //    BiA& operator= (const BiA& bia) {}
-    //private:
-    //    BitSet& b_ ;
-    //    std::int32_t i_;
-    //};
+    private:
+        BitSet& b_ ;
+        std::int32_t i_;
+    };
     std::int32_t size_ = 0;
     std::vector<std::uint32_t> bits_;
 };
