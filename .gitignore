@@ -33,3 +33,9 @@
 
 .vs
 out
+
+build
+build.*
+bin
+bin.*
+build.bat
