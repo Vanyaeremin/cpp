@@ -8,15 +8,15 @@ Complex operator+(const double lhs, const Complex& rhs) noexcept { return operat
 Complex operator+(const Complex& lhs, const double rhs) noexcept { return operator+(lhs, Complex(rhs)); }
 Complex operator/(const double lhs, const Complex& rhs) { return operator/(Complex(lhs), rhs); }
 Complex operator/(const Complex& lhs, const double rhs) { return operator/(lhs, Complex(rhs)); }
-bool operator==(const Complex& lhs, const double rhs) noexcept { return operator==(lhs, Complex(rhs)); }
-bool operator==(const double lhs, const Complex& rhs) noexcept { return operator==(Complex(lhs), rhs); }
-bool operator!=(const Complex& lhs, const Complex& rhs) noexcept { return !operator==(lhs, rhs); }
-bool operator!=(const Complex& lhs, const double rhs) noexcept { return !operator==(lhs, Complex(rhs)); }
-bool operator!=(const double lhs, const Complex& rhs) noexcept { return !operator==(Complex(lhs), rhs); }
+//bool operator==(const Complex& lhs, const double rhs) noexcept { return operator==(lhs, Complex(rhs)); }
+//bool operator==(const double lhs, const Complex& rhs) noexcept { return operator==(Complex(lhs), rhs); }
+//bool operator!=(const Complex& lhs, const Complex& rhs) noexcept { return !operator==(lhs, rhs); }
+//bool operator!=(const Complex& lhs, const double rhs) noexcept { return !operator==(lhs, Complex(rhs)); }
+//bool operator!=(const double lhs, const Complex& rhs) noexcept { return !operator==(Complex(lhs), rhs); }
 
-bool operator==(const Complex& lhs, const Complex& rhs) noexcept {
+bool Complex::operator==(const Complex& rhs) const noexcept {
     double constexpr eps = 2 * std::numeric_limits<double>::epsilon();
-    if (std::abs(lhs.im - rhs.im) <= eps && std::abs(lhs.re - rhs.re) <= eps) {
+    if (std::abs(im - rhs.im) <= eps && std::abs(re - rhs.re) <= eps) {
         return 1;
     }
     else {

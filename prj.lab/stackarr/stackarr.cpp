@@ -59,7 +59,7 @@ void StackArr::Push(const Complex& el) {
     data_[i_top_] = el;
 }
 
-Complex& StackArr::Top() {
+Complex& StackArr::Top() & {
     if (i_top_ >= 0) {
         return data_[i_top_];
     }
@@ -68,7 +68,7 @@ Complex& StackArr::Top() {
     }
 }
 
-const Complex& StackArr::Top() const {
+const Complex& StackArr::Top() const & {
     if (i_top_ >= 0) {
         return data_[i_top_];
     }

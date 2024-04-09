@@ -12,17 +12,17 @@
 
 class DynArr {
 public:
-    [[nodiscard]] DynArr() = default;
-    [[nodiscard]] DynArr(const DynArr& d);
-    [[nodiscard]] DynArr(DynArr&& d) noexcept;
-    [[nodiscard]] explicit DynArr(std::ptrdiff_t size);
+    DynArr() = default;
+    DynArr(const DynArr& d);
+    DynArr(DynArr&& d) noexcept;
+    explicit DynArr(std::ptrdiff_t size);
     ~DynArr() = default;
 
-    [[nodiscard]] DynArr& operator=(const DynArr& d) noexcept;
-    [[nodiscard]] DynArr& operator=(DynArr&& d) noexcept;
+    DynArr& operator=(const DynArr& d) noexcept;
+    DynArr& operator=(DynArr&& d) noexcept;
 
     [[nodiscard]] std::ptrdiff_t Size() const noexcept;
-    void Resize(std::ptrdiff_t size);
+    void Resize(const std::ptrdiff_t size);
 
     [[nodiscard]] float& operator[](const std::ptrdiff_t i);
     [[nodiscard]] const float& operator[](const std::ptrdiff_t i) const;

@@ -5,22 +5,23 @@
 #include <iostream>
 #include <algorithm>
 #include <cstddef>
+#include <stdexcept>
 #include "complex/complex.hpp"
 
-class QueueLst {
+class QueueLst final {
 public:
-    [[nodiscard]] QueueLst() = default;
-    [[nodiscard]] QueueLst(const QueueLst& rhs);
-    [[nodiscard]] QueueLst(QueueLst&& rhs) noexcept;
+    QueueLst() = default;
+    QueueLst(const QueueLst& rhs);
+    QueueLst(QueueLst&& rhs) noexcept;
     ~QueueLst();
-    [[nodiscard]] QueueLst& operator=(const QueueLst& rhs);
-    [[nodiscard]] QueueLst& operator=(QueueLst&& rhs) noexcept;
+    QueueLst& operator=(const QueueLst& rhs);
+    QueueLst& operator=(QueueLst&& rhs) noexcept;
 
     void Push(const Complex& c);
     void Pop() noexcept;
     bool IsEmpty() const noexcept;
-    [[nodiscard]] Complex& Top();
-    [[nodiscard]] const Complex& Top() const;
+    [[nodiscard]] Complex& Top() &;
+    [[nodiscard]] const Complex& Top() const &;
     void Clear() noexcept;
 
 private:

@@ -77,7 +77,7 @@ const float& DynArr::operator[](const std::ptrdiff_t i) const {
     }
 }
 
-void DynArr::Resize(std::ptrdiff_t size) {
+void DynArr::Resize(const std::ptrdiff_t size) {
     if (size > 0) {
         if (size > size_ && size <= capacity_) {
             std::fill(data_.get() + size_, data_.get() + size, 0);

@@ -121,7 +121,7 @@ bool QueueLstPr::IsEmpty() const noexcept {
     return head_ == nullptr;
 }
 
-float& QueueLstPr::Top() {
+float& QueueLstPr::Top() & {
     if (head_ == nullptr) {
         throw std::logic_error("QueueLstPr is empty!\n");
     }
@@ -130,7 +130,7 @@ float& QueueLstPr::Top() {
     }
 }
 
-const float& QueueLstPr::Top() const {
+const float& QueueLstPr::Top() const & {
     if (head_ == nullptr) {
         throw std::logic_error("QueueLstPr is empty!\n");
     }

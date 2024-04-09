@@ -90,7 +90,7 @@ void QueueArr::Pop() noexcept {
     }
 }
 
-Complex& QueueArr::Top() {
+Complex& QueueArr::Top() & {
     if (head_ < 0) {
         throw std::logic_error("QueueArr Is Empty!");
     }
@@ -99,7 +99,7 @@ Complex& QueueArr::Top() {
     }
 }
 
-const Complex& QueueArr::Top() const {
+const Complex& QueueArr::Top() const & {
     if (head_ < 0) {
         throw std::logic_error("QueueArr Is Empty!");
     }
@@ -110,10 +110,6 @@ const Complex& QueueArr::Top() const {
 
 bool QueueArr::IsEmpty() const noexcept {
     return head_ < 0;
-}
-
-std::ptrdiff_t QueueArr::Count() const {
-    return (head_ == -1) ? 0 : (tail_ + capacity_ - head_) % capacity_;
 }
 
 void QueueArr::Clear() noexcept {

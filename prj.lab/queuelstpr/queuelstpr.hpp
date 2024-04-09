@@ -3,23 +3,25 @@
 #define QUEUELSTPR
 
 #include <iostream>
+#include <algorithm>
 #include <cstddef>
+#include <stdexcept>
 
 class QueueLstPr {
 public:
-    [[nodiscard]] QueueLstPr() = default;
+    QueueLstPr() = default;
     ~QueueLstPr();
-    [[nodiscard]] QueueLstPr(const QueueLstPr& rhs);
-    [[nodiscard]] QueueLstPr(QueueLstPr&& rhs) noexcept;
-    [[nodiscard]] QueueLstPr& operator=(const QueueLstPr& rhs);
-    [[nodiscard]] QueueLstPr& operator=(QueueLstPr&& rhs) noexcept;
+    QueueLstPr(const QueueLstPr& rhs);
+    QueueLstPr(QueueLstPr&& rhs) noexcept;
+    QueueLstPr& operator=(const QueueLstPr& rhs);
+    QueueLstPr& operator=(QueueLstPr&& rhs) noexcept;
 
     void Push(const float& f);
     void Pop() noexcept;
     void Clear() noexcept;
     bool IsEmpty() const noexcept;
-    [[nodiscard]] float& Top();
-    [[nodiscard]] const float& Top() const;
+    [[nodiscard]] float& Top() &;
+    [[nodiscard]] const float& Top() const &;
 
 private:
     struct Node {

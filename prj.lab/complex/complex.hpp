@@ -11,12 +11,12 @@
 #include <string>
 
 struct Complex {
-    [[nodiscard]] Complex() = default;
-    [[nodiscard]] Complex(const Complex&) = default;
-    [[nodiscard]] Complex(Complex&&) = default;
+    Complex() = default;
+    Complex(const Complex&) = default;
+    Complex(Complex&&) = default;
 
-    [[nodiscard]] explicit Complex(const double real) : Complex(real, 0.0) {}
-    [[nodiscard]] Complex(const double real, const double imaginary) : re(real), im(imaginary) {}
+    explicit Complex(const double real) : Complex(real, 0.0) {}
+    Complex(const double real, const double imaginary) : re(real), im(imaginary) {}
 
     ~Complex() = default;
 
@@ -32,6 +32,12 @@ struct Complex {
     Complex& operator*=(const double rhs) noexcept { return operator*=(Complex(rhs)); }
     Complex& operator/=(const double rhs) { return operator/=(Complex(rhs)); }
     [[nodiscard]] Complex operator-() const noexcept;
+
+    [[nodiscard]] bool operator==(const Complex& rhs) const noexcept;
+    [[nodiscard]] bool operator==(const double rhs) const noexcept { return operator==(Complex(rhs)); }
+
+    [[nodiscard]] bool operator!=(const Complex& rhs) const noexcept { return !operator==(rhs); };
+    [[nodiscard]] bool operator!=(const double rhs) const noexcept { return !operator==(Complex(rhs)); }
     
     [[nodiscard]] std::ostream& writeTo(std::ostream& ostrm) const;
     [[nodiscard]] std::istream& readFrom(std::istream& isdtrm);
@@ -59,12 +65,12 @@ struct Complex {
 [[nodiscard]] Complex operator/(const Complex& lhs, const double rhs);
 [[nodiscard]] Complex pow(const Complex& lhs, int n);
 
-[[nodiscard]] bool operator==(const Complex& lhs, const Complex& rhs) noexcept;
-[[nodiscard]] bool operator!=(const Complex& lhs, const Complex& rhs) noexcept;
-[[nodiscard]] bool operator==(const Complex& lhs, const double rhs) noexcept;
-[[nodiscard]] bool operator==(const double lhs, const Complex& rhs) noexcept;
-[[nodiscard]] bool operator!=(const Complex& lhs, const double rhs) noexcept;
-[[nodiscard]] bool operator!=(const double lhs, const Complex& rhs) noexcept;
+//[[nodiscard]] bool operator==(const Complex& lhs, const Complex& rhs) noexcept;
+//[[nodiscard]] bool operator!=(const Complex& lhs, const Complex& rhs) noexcept;
+//[[nodiscard]] bool operator==(const Complex& lhs, const double rhs) noexcept;
+//[[nodiscard]] bool operator==(const double lhs, const Complex& rhs) noexcept;
+//[[nodiscard]] bool operator!=(const Complex& lhs, const double rhs) noexcept;
+//[[nodiscard]] bool operator!=(const double lhs, const Complex& rhs) noexcept;
 [[nodiscard]] double abs(const Complex& rhs) noexcept;
 
 bool testParse(const std::string& str);

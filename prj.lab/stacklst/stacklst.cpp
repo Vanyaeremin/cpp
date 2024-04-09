@@ -86,7 +86,7 @@ bool StackLst::IsEmpty() const noexcept {
     return (head_ == nullptr) ? 1 : 0;
 }
 
-Complex& StackLst::Top() {
+Complex& StackLst::Top() & {
     if (head_ == nullptr) {
         throw std::logic_error("Stack is empty!\n");
     }
@@ -95,7 +95,7 @@ Complex& StackLst::Top() {
     }
 }
 
-const Complex& StackLst::Top() const {
+const Complex& StackLst::Top() const & {
     if (head_ == nullptr) {
         throw std::logic_error("Stack is empty!\n");
     }

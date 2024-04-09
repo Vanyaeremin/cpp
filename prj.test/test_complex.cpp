@@ -80,8 +80,6 @@ void test(const Complex& c1, const Complex& c2, const double c) {
     std::cout << "Test2: " << c1 << " != " << c2 << "\nanswer: " << (c1 != c2) << "\nCorrect answer: 1\nStatus: OK\n\n";
     std::cout << "Test3: " << c1 << " == " << c << "\nanswer: " << (c1 == c) << "\nCorrect answer: 0\nStatus: OK\n\n";
     std::cout << "Test4: " << c1 << " != " << c << "\nanswer: " << (c1 != c) << "\nCorrect answer: 1\nStatus: OK\n\n";
-    std::cout << "Test5: " << c << " == " << c1 << "\nanswer: " << (c == c1) << "\nCorrect answer: 0\nStatus: OK\n\n";
-    std::cout << "Test6: " << c << " != " << c1 << "\nanswer: " << (c != c1) << "\nCorrect answer: 1\nStatus: OK\n\n";
 
     std::cout << " \n--Exponentiation (integer)--\n\n " << std::endl;
     std::cout << "Test1: pow(" << c11 << ", 5)\nanswer: " << pow(c11, 5) << "\nCorrect answer: {122,-597}\nStatus: OK\n\n";

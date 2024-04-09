@@ -6,30 +6,33 @@
 #include <memory>
 #include <algorithm>
 #include <cstddef>
+#include <stdexcept>
 #include "complex/complex.hpp"
 
-class QueueArr {
+class QueueArr final {
 public:
-    [[nodiscard]] QueueArr() = default;
-    [[nodiscard]] QueueArr(const QueueArr& rhs);
+    QueueArr() = default;
+    QueueArr(const QueueArr& rhs);
     ~QueueArr() = default;
-    [[nodiscard]] QueueArr& operator=(const QueueArr& rhs);
-    [[nodiscard]] QueueArr& operator=(QueueArr&& d) noexcept;
-    [[nodiscard]] QueueArr(QueueArr&& d) noexcept;
+    QueueArr& operator=(const QueueArr& rhs);
+    QueueArr& operator=(QueueArr&& d) noexcept;
+    QueueArr(QueueArr&& d) noexcept;
 
     void Push(const Complex& c);
     void Pop() noexcept;
     void Clear() noexcept;
-    [[nodiscard]] Complex& Top();
-    [[nodiscard]] const Complex& Top() const;
+    [[nodiscard]] Complex& Top() &;
+    [[nodiscard]] const Complex& Top() const &;
     bool IsEmpty() const noexcept;
-    std::ptrdiff_t Count() const;
 
 private:
     std::ptrdiff_t capacity_ = 0;
     std::ptrdiff_t head_ = -1;
     std::ptrdiff_t tail_ = -1;
     std::unique_ptr<Complex[]> data_ = std::make_unique<Complex[]>(capacity_);
+    std::ptrdiff_t Count() const {
+        return IsEmpty() ? 0 : (tail_ + capacity_ - head_) % capacity_ + 1;
+    };
 };
 
 #endif

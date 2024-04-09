@@ -105,7 +105,7 @@ bool QueueLst::IsEmpty() const noexcept {
     return (head_ == nullptr);
 }
 
-Complex& QueueLst::Top() {
+Complex& QueueLst::Top() & {
     if (head_ == nullptr) {
         throw std::logic_error("Stack is empty!\n");
     }
@@ -113,7 +113,7 @@ Complex& QueueLst::Top() {
         return head_->v;
     }
 }
-const Complex& QueueLst::Top() const {
+const Complex& QueueLst::Top() const & {
     if (head_ == nullptr) {
         throw std::logic_error("Stack is empty!\n");
     }
