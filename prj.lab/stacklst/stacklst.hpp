@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include "complex/complex.hpp"
 
-class StackLst {
+class StackLst final {
 public:
     StackLst() = default;
     StackLst(const StackLst& rhs);
@@ -29,6 +29,7 @@ private:
         Complex v;
         Node* next = nullptr;
         Node(const Complex& val) : v(val) {}
+        Node() = default;
         ~Node() = default;
     };
     Node* head_ = nullptr;

@@ -13,6 +13,9 @@ StackLst::StackLst(const StackLst& rhs) {
             pr = newNode;
         }
     }
+    else {
+        head_ = nullptr;
+    }
 }
 
 StackLst::StackLst(StackLst&& rhs) noexcept{
@@ -24,6 +27,7 @@ StackLst::~StackLst() {
         Node* delete_future = head_;
         head_ = head_->next;
         delete delete_future;
+        delete_future = nullptr;
     }
 }
 
@@ -35,35 +39,43 @@ StackLst& StackLst::operator=(StackLst&& rhs) noexcept {
 }
 
 StackLst& StackLst::operator=(const StackLst& rhs) noexcept {
-    if (this != &rhs) {
-        Node* vs = rhs.head_;
-        Node* tvs = head_;
-        Node* pr;
-        while (vs != nullptr) {
-            if (tvs != nullptr) {
-                tvs->v = vs->v;
+    if (rhs.head_ == nullptr) {
+        head_ = nullptr;
+    }
+    else {
+        if (this != &rhs) {
+            Node* rhs_cur = rhs.head_;
+            Node* cur = head_;
+            Node* tail = cur;
+            if (cur == nullptr) {
+                Node* newNode = new Node;
+                cur = newNode;
+                head_ = newNode;
+                tail = cur;
             }
-            else {
-                Node* newNode = new Node(vs->v);
-                if (tvs != head_) {
-                    pr->next = newNode;
-                    tvs = newNode;
+            while (rhs_cur != nullptr) {
+                if (cur == nullptr) {
+                    Node* newNode = new Node;
+                    cur = newNode;
+                    tail->next = newNode;
+                    tail = newNode;
                 }
-                else {
-                    head_ = newNode;
-                    tvs = newNode;
+
+                cur->v = rhs_cur->v;
+                rhs_cur = rhs_cur->next;
+
+                if (rhs_cur == nullptr) {
+                    tail = cur;
+                    tail->next = nullptr;
                 }
+                cur = cur->next;
             }
-            pr = tvs;
-            vs = vs->next;
-            tvs = tvs->next;
+            while (cur != nullptr) {
+                Node* temp = cur;
+                cur = cur->next;
+                delete temp;
+            }
         }
-        while (tvs != nullptr) {
-            Node* delete_future = tvs;
-            tvs = tvs->next;
-            delete delete_future;
-        }
-        pr->next = nullptr;
     }
     return *this;
 }
@@ -72,6 +84,7 @@ void StackLst::Push(const Complex& c) {
     Node* newNode = new Node(c);
     newNode->next = head_;
     head_ = newNode;
+    newNode = nullptr;
 }
 
 void StackLst::Pop() noexcept {
@@ -79,6 +92,7 @@ void StackLst::Pop() noexcept {
         Node* delete_future = head_;
         head_ = head_->next;
         delete delete_future;
+        delete_future = nullptr;
     }
 }
 
@@ -109,5 +123,6 @@ void StackLst::Clear() noexcept {
         Node* delete_future = head_;
         head_ = head_->next;
         delete delete_future;
+        delete_future = nullptr;
     }
 }

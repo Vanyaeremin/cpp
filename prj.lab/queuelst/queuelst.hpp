@@ -29,6 +29,7 @@ private:
         Complex v;
         Node* next = nullptr;
         Node(const Complex& val) : v(val) {}
+        Node() = default;
         ~Node() = default;
     };
     Node* head_ = nullptr;

@@ -1,6 +1,43 @@
-#include "queuelst.hpp"
+#pragma once
+#ifndef QUEUELSTT_HPP
+#define QUEUELSTT_HPP
 
-QueueLst::QueueLst(const QueueLst& rhs) {
+#include <iostream>
+#include <algorithm>
+#include <cstddef>
+#include <stdexcept>
+
+template <class T>
+class QueueLstT final {
+public:
+    QueueLstT() = default;
+    QueueLstT(const QueueLstT& rhs);
+    QueueLstT(QueueLstT&& rhs) noexcept;
+    ~QueueLstT();
+    QueueLstT& operator=(const QueueLstT& rhs);
+    QueueLstT& operator=(QueueLstT&& rhs) noexcept;
+
+    void Push(const T& c);
+    void Pop() noexcept;
+    bool IsEmpty() const noexcept;
+    [[nodiscard]] T& Top()&;
+    [[nodiscard]] const T& Top() const&;
+    void Clear() noexcept;
+
+private:
+    struct Node {
+        T v;
+        Node* next = nullptr;
+        Node(const T& val) : v(val) {}
+        Node() = default;
+        ~Node() = default;
+    };
+    Node* head_ = nullptr;
+    Node* tail_ = nullptr;
+};
+
+template <class T>
+QueueLstT<T>::QueueLstT(const QueueLstT<T>& rhs) {
     if (rhs.head_ != nullptr) {
         if (this != &rhs) {
             Node* newNode = new Node(rhs.head_->v);
@@ -21,12 +58,14 @@ QueueLst::QueueLst(const QueueLst& rhs) {
     }
 }
 
-QueueLst::QueueLst(QueueLst&& rhs) noexcept {
+template <class T>
+QueueLstT<T>::QueueLstT(QueueLstT<T>&& rhs) noexcept {
     std::swap(head_, rhs.head_);
     std::swap(tail_, rhs.tail_);
 }
 
-QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept {
+template <class T>
+QueueLstT<T>& QueueLstT<T>::operator=(QueueLstT<T>&& rhs) noexcept {
     if (this != &rhs) {
         std::swap(head_, rhs.head_);
         std::swap(tail_, rhs.tail_);
@@ -34,7 +73,8 @@ QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept {
     return *this;
 }
 
-QueueLst::~QueueLst() {
+template <class T>
+QueueLstT<T>::~QueueLstT() {
     while (head_ != nullptr) {
         Node* delete_future = head_;
         head_ = head_->next;
@@ -44,7 +84,8 @@ QueueLst::~QueueLst() {
     tail_ = nullptr;
 }
 
-QueueLst& QueueLst::operator=(const QueueLst& rhs) {
+template <class T>
+QueueLstT<T>& QueueLstT<T>::operator=(const QueueLstT<T>& rhs) {
     if (rhs.head_ == nullptr) {
         head_ = nullptr;
         tail_ = nullptr;
@@ -87,7 +128,8 @@ QueueLst& QueueLst::operator=(const QueueLst& rhs) {
     return *this;
 }
 
-void QueueLst::Push(const Complex& c) {
+template <class T>
+void QueueLstT<T>::Push(const T& c) {
     Node* newNode = new Node(c);
     if (head_ == nullptr) {
         head_ = newNode;
@@ -99,7 +141,8 @@ void QueueLst::Push(const Complex& c) {
     }
 }
 
-void QueueLst::Pop() noexcept {
+template <class T>
+void QueueLstT<T>::Pop() noexcept {
     if (head_ != nullptr) {
         Node* delete_future = head_;
         head_ = head_->next;
@@ -111,19 +154,13 @@ void QueueLst::Pop() noexcept {
     }
 }
 
-bool QueueLst::IsEmpty() const noexcept {
+template <class T>
+bool QueueLstT<T>::IsEmpty() const noexcept {
     return (head_ == nullptr);
 }
 
-Complex& QueueLst::Top() & {
-    if (head_ == nullptr) {
-        throw std::logic_error("Stack is empty!\n");
-    }
-    else {
-        return head_->v;
-    }
-}
-const Complex& QueueLst::Top() const & {
+template <class T>
+T& QueueLstT<T>::Top()& {
     if (head_ == nullptr) {
         throw std::logic_error("Stack is empty!\n");
     }
@@ -132,7 +169,18 @@ const Complex& QueueLst::Top() const & {
     }
 }
 
-void QueueLst::Clear() noexcept {
+template <class T>
+const T& QueueLstT<T>::Top() const& {
+    if (head_ == nullptr) {
+        throw std::logic_error("Stack is empty!\n");
+    }
+    else {
+        return head_->v;
+    }
+}
+
+template <class T>
+void QueueLstT<T>::Clear() noexcept {
     while (head_ != nullptr) {
         Node* delete_future = head_;
         head_ = head_->next;
@@ -141,3 +189,4 @@ void QueueLst::Clear() noexcept {
     }
     tail_ = nullptr;
 }
+#endif

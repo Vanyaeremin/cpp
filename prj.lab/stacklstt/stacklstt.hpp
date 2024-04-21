@@ -31,6 +31,7 @@ private:
         T v;
         Node* next = nullptr;
         Node(const T& val) : v(val) {}
+        Node() = default;
         ~Node() = default;
     };
     Node* head_ = nullptr;
@@ -50,6 +51,9 @@ StackLstT<T>::StackLstT(const StackLstT<T>& rhs) {
             pr = newNode;
         }
     }
+    else {
+        head_ = nullptr;
+    }
 }
 
 template<class T>
@@ -63,6 +67,7 @@ StackLstT<T>::~StackLstT() {
         Node* delete_future = head_;
         head_ = head_->next;
         delete delete_future;
+        delete_future = nullptr;
     }
 }
 
@@ -76,35 +81,43 @@ StackLstT<T>& StackLstT<T>::operator=(StackLstT<T>&& rhs) noexcept {
 
 template<class T>
 StackLstT<T>& StackLstT<T>::operator=(const StackLstT<T>& rhs) {
-    if (this != &rhs) {
-        Node* vs = rhs.head_;
-        Node* tvs = head_;
-        Node* pr;
-        while (vs != nullptr) {
-            if (tvs != nullptr) {
-                tvs->v = vs->v;
+    if (rhs.head_ == nullptr) {
+        head_ = nullptr;
+    }
+    else {
+        if (this != &rhs) {
+            Node* rhs_cur = rhs.head_;
+            Node* cur = head_;
+            Node* tail = cur;
+            if (cur == nullptr) {
+                Node* newNode = new Node;
+                cur = newNode;
+                head_ = newNode;
+                tail = cur;
             }
-            else {
-                Node* newNode = new Node(vs->v);
-                if (tvs != head_) {
-                    pr->next = newNode;
-                    tvs = newNode;
+            while (rhs_cur != nullptr) {
+                if (cur == nullptr) {
+                    Node* newNode = new Node;
+                    cur = newNode;
+                    tail->next = newNode;
+                    tail = newNode;
                 }
-                else {
-                    head_ = newNode;
-                    tvs = newNode;
+
+                cur->v = rhs_cur->v;
+                rhs_cur = rhs_cur->next;
+
+                if (rhs_cur == nullptr) {
+                    tail = cur;
+                    tail->next = nullptr;
                 }
+                cur = cur->next;
             }
-            pr = tvs;
-            vs = vs->next;
-            tvs = tvs->next;
+            while (cur != nullptr) {
+                Node* temp = cur;
+                cur = cur->next;
+                delete temp;
+            }
         }
-        while (tvs != nullptr) {
-            Node* delete_future = tvs;
-            tvs = tvs->next;
-            delete delete_future;
-        }
-        pr->next = nullptr;
     }
     return *this;
 }
@@ -114,6 +127,7 @@ void StackLstT<T>::Push(const T& c) {
     Node* newNode = new Node(c);
     newNode->next = head_;
     head_ = newNode;
+    newNode = nullptr;
 }
 
 template<class T>
@@ -122,6 +136,7 @@ void StackLstT<T>::Pop() noexcept {
         Node* delete_future = head_;
         head_ = head_->next;
         delete delete_future;
+        delete_future = nullptr;
     }
 }
 
@@ -156,6 +171,7 @@ void StackLstT<T>::Clear() noexcept {
         Node* delete_future = head_;
         head_ = head_->next;
         delete delete_future;
+        delete_future = nullptr;
     }
 }
 
