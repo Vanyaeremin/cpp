@@ -28,6 +28,7 @@ private:
         float f;
         Node* next = nullptr;
         Node(const float& item) : f(item) {}
+        Node() = default;
         ~Node() = default;
     };
     Node* head_ = nullptr;
