@@ -29,7 +29,8 @@ private:
     struct Node {
         T f;
         Node* next = nullptr;
-        Node(const T& item) : f(item) {}
+        Node(const float& item) : f(item) {}
+        Node() = default;
         ~Node() = default;
     };
     Node* head_ = nullptr;
@@ -38,16 +39,21 @@ private:
 template <class T>
 QueueLstPrT<T>::QueueLstPrT(const QueueLstPrT<T>& rhs) {
     if (rhs.head_ != nullptr) {
-        Node* newNode = new Node(rhs.head_->f);
-        head_ = newNode;
-        Node* next = rhs.head_->next;
-        Node* cur = newNode;
-        while (next != nullptr) {
-            Node* newNode = new Node(next->f);
-            cur->next = newNode;
-            cur = newNode;
-            next = next->next;
+        if (this != &rhs) {
+            Node* newNode = new Node(rhs.head_->f);
+            Node* cur = newNode;
+            head_ = newNode;
+            Node* current = rhs.head_->next;
+            while (current != nullptr) {
+                Node* newNode = new Node(current->f);
+                current = current->next;
+                cur->next = newNode;
+                cur = newNode;
+            }
         }
+    }
+    else {
+        head_ = nullptr;
     }
 }
 
@@ -58,33 +64,39 @@ QueueLstPrT<T>::QueueLstPrT(QueueLstPrT<T>&& rhs) noexcept {
 
 template <class T>
 QueueLstPrT<T>& QueueLstPrT<T>::operator=(const QueueLstPrT<T>& rhs) {
-    if (this != &rhs) {
+    if (rhs.head_ == nullptr) {
+        while (head_ != nullptr) {
+            Pop();
+        }
+    }
+    else {
+        if (head_ == nullptr) {
+            Node* new_node = new Node;
+            head_ = new_node;
+        }
         Node* cur = head_;
-        Node* rh_cur = rhs.head_;
-        Node* pr;
-        while (rh_cur != nullptr) {
-            if (cur == nullptr) {
-                Node* newNode = new Node(rh_cur->f);
-                cur = newNode;
-                if (head_ != nullptr) {
-                    pr->next = newNode;
-                }
-                else {
-                    head_ = newNode;
-                }
+        Node* current = rhs.head_;
+        Node* future_delete = nullptr;
+        Node* future_delete_2 = nullptr;
+        while (current != nullptr) {
+            cur->f = current->f;
+            if (cur->next == nullptr && current->next != nullptr) {
+                Node* newNode = new Node;
+                cur->next = newNode;
             }
-            cur->f = rh_cur->f;
-            pr = cur;
+            current = current->next;
+            if (current == nullptr) {
+                future_delete = cur->next;
+                cur->next = nullptr;
+
+            }
             cur = cur->next;
-            rh_cur = rh_cur->next;
         }
-        while (cur != nullptr) {
-            Node* future_delete = cur;
-            cur = cur->next;
-            delete future_delete;
-            future_delete = nullptr;
+        while (future_delete != nullptr) {
+            future_delete_2 = future_delete;
+            future_delete = future_delete->next;
+            delete future_delete_2;
         }
-        pr->next = nullptr;
     }
     return *this;
 }
@@ -99,32 +111,32 @@ QueueLstPrT<T>& QueueLstPrT<T>::operator=(QueueLstPrT<T>&& rhs) noexcept {
 
 template <class T>
 void QueueLstPrT<T>::Push(const T& f) {
-    Node* newNode = new Node(f);
-    if (head_ == nullptr) {
-        head_ = newNode;
+    Node* new_node = new Node(f);
+    Node* cur = head_;
+    Node* prev = nullptr;
+
+    if (cur == nullptr) {
+        head_ = new_node;
     }
     else {
-        if (newNode->f <= head_->f) {
-            newNode->next = head_;
-            head_ = newNode;
-        }
-        else {
-            bool flag = 0;
-            Node* pred = head_;
-            Node* future = head_->next;
-            while (future != nullptr) {
-                if ((newNode->f >= pred->f) && (newNode->f <= future->f)) {
-                    pred->next = newNode;
-                    newNode->next = future;
-                    flag = 1;
+        while (cur != nullptr) {
+            if (f > cur->f) {
+                prev = cur;
+                if (cur->next == nullptr) {
+                    cur->next = new_node;
                     break;
                 }
-                pred = pred->next;
-                future = future->next;
+                cur = cur->next;
             }
-            if (future == nullptr && flag == 0) {
-                pred->next = newNode;
-                flag = 1;
+            else {
+                if (cur == head_) {
+                    head_ = new_node;
+                }
+                else {
+                    prev->next = new_node;
+                }
+                new_node->next = cur;
+                break;
             }
         }
     }
@@ -134,7 +146,7 @@ template <class T>
 void QueueLstPrT<T>::Pop() noexcept {
     if (head_ != nullptr) {
         Node* future_delete = head_;
-        head_ = head_->next;
+        head_ = future_delete->next;
         delete future_delete;
         future_delete = nullptr;
     }
@@ -142,21 +154,18 @@ void QueueLstPrT<T>::Pop() noexcept {
 
 template <class T>
 QueueLstPrT<T>::~QueueLstPrT() {
-    while (head_ != nullptr) {
-        Node* future_delete = head_;
-        head_ = head_->next;
-        delete future_delete;
-        future_delete = nullptr;
+    Node* future_delete = head_;
+    while (future_delete != nullptr) {
+        future_delete = head_->next;
+        delete head_;
+        head_ = future_delete;
     }
 }
 
 template <class T>
 void QueueLstPrT<T>::Clear() noexcept {
-    while (head_ != nullptr) {
-        Node* future_delete = head_;
-        head_ = head_->next;
-        delete future_delete;
-        future_delete = nullptr;
+    while (!IsEmpty()) {
+        Pop();
     }
 }
 

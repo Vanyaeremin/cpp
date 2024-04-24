@@ -36,7 +36,7 @@ private:
     Node* tail_ = nullptr;
 };
 
-template <class T>
+template<class T>
 QueueLstT<T>::QueueLstT(const QueueLstT<T>& rhs) {
     if (rhs.head_ != nullptr) {
         if (this != &rhs) {
@@ -58,13 +58,13 @@ QueueLstT<T>::QueueLstT(const QueueLstT<T>& rhs) {
     }
 }
 
-template <class T>
+template<class T>
 QueueLstT<T>::QueueLstT(QueueLstT<T>&& rhs) noexcept {
     std::swap(head_, rhs.head_);
     std::swap(tail_, rhs.tail_);
 }
 
-template <class T>
+template<class T>
 QueueLstT<T>& QueueLstT<T>::operator=(QueueLstT<T>&& rhs) noexcept {
     if (this != &rhs) {
         std::swap(head_, rhs.head_);
@@ -73,7 +73,7 @@ QueueLstT<T>& QueueLstT<T>::operator=(QueueLstT<T>&& rhs) noexcept {
     return *this;
 }
 
-template <class T>
+template<class T>
 QueueLstT<T>::~QueueLstT() {
     while (head_ != nullptr) {
         Node* delete_future = head_;
@@ -84,7 +84,7 @@ QueueLstT<T>::~QueueLstT() {
     tail_ = nullptr;
 }
 
-template <class T>
+template<class T>
 QueueLstT<T>& QueueLstT<T>::operator=(const QueueLstT<T>& rhs) {
     if (rhs.head_ == nullptr) {
         head_ = nullptr;
@@ -128,7 +128,7 @@ QueueLstT<T>& QueueLstT<T>::operator=(const QueueLstT<T>& rhs) {
     return *this;
 }
 
-template <class T>
+template<class T>
 void QueueLstT<T>::Push(const T& c) {
     Node* newNode = new Node(c);
     if (head_ == nullptr) {
@@ -141,7 +141,7 @@ void QueueLstT<T>::Push(const T& c) {
     }
 }
 
-template <class T>
+template<class T>
 void QueueLstT<T>::Pop() noexcept {
     if (head_ != nullptr) {
         Node* delete_future = head_;
@@ -154,12 +154,12 @@ void QueueLstT<T>::Pop() noexcept {
     }
 }
 
-template <class T>
+template<class T>
 bool QueueLstT<T>::IsEmpty() const noexcept {
     return (head_ == nullptr);
 }
 
-template <class T>
+template<class T>
 T& QueueLstT<T>::Top()& {
     if (head_ == nullptr) {
         throw std::logic_error("Stack is empty!\n");
@@ -169,7 +169,7 @@ T& QueueLstT<T>::Top()& {
     }
 }
 
-template <class T>
+template<class T>
 const T& QueueLstT<T>::Top() const& {
     if (head_ == nullptr) {
         throw std::logic_error("Stack is empty!\n");
@@ -179,7 +179,7 @@ const T& QueueLstT<T>::Top() const& {
     }
 }
 
-template <class T>
+template<class T>
 void QueueLstT<T>::Clear() noexcept {
     while (head_ != nullptr) {
         Node* delete_future = head_;
