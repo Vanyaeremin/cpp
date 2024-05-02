@@ -259,5 +259,4 @@ TEST_CASE("CHECK_BIA") {
     CHECK_EQ(b3[0] == 1, 1);
     CHECK_EQ(b3[0] == 0, 0);
     CHECK_EQ(b3[0].operator bool(), true);
-    CHECK_EQ(operator bool(b3[0]), true);
 }
