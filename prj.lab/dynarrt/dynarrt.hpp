@@ -55,7 +55,6 @@ DynArrT<T>::DynArrT(const std::ptrdiff_t size) {
         size_ = size;
         capacity_ = size;
         data_ = std::make_unique<T[]>(size);
-        std::fill(data_.get(), data_.get() + size, 0);
     }
     else if (size < 0) {
         throw std::invalid_argument("Negative array size\n");
@@ -123,12 +122,10 @@ template <class T>
 void DynArrT<T>::Resize(const std::ptrdiff_t size) {
     if (size > 0) {
         if (size > size_ && size <= capacity_) {
-            std::fill(data_.get() + size_, data_.get() + size, 0);
         }
         else if (size > capacity_) {
             std::unique_ptr<T[]> new_data = std::make_unique<T[]>(size);
             std::copy(data_.get(), data_.get() + size_, new_data.get());
-            std::fill(new_data.get() + size_, new_data.get() + size, 0);
             std::swap(data_, new_data);
             capacity_ = size;
         }

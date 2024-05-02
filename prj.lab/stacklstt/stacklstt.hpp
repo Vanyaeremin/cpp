@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <cstdint>
 #include <string>
+#include <memory>
 
 template<class T>
 class StackLstT final {

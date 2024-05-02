@@ -29,7 +29,7 @@ private:
     struct Node {
         T f;
         Node* next = nullptr;
-        Node(const float& item) : f(item) {}
+        Node(const T& item) : f(item) {}
         Node() = default;
         ~Node() = default;
     };
