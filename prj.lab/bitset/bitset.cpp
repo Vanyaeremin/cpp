@@ -1,12 +1,32 @@
 #include "bitset.hpp"
 
-BitSet::BiA::operator bool() {
-    return static_cast<bool>(b_.bits_[i_]);
+bool BitSet::BiA::operator==(const BiA& rhs) {
+    return b_.bits_[i_] == rhs.b_.bits_[i_];
+}
+
+bool BitSet::BiA::operator==(const bool rhs) {
+    return b_.bits_[i_] == rhs;
+}
+
+bool BitSet::BiA::operator==(const int rhs) {
+    return b_.bits_[i_] == static_cast<bool>(rhs);
+}
+
+bool BitSet::BiA::operator!=(const BiA& rhs) {
+    return b_.bits_[i_] != rhs.b_.bits_[i_];
+}
+
+bool BitSet::BiA::operator!=(const bool rhs) {
+    return b_.bits_[i_] != rhs;
+}
+
+bool BitSet::BiA::operator!=(const int rhs) {
+    return b_.bits_[i_] != static_cast<bool>(rhs);
 }
 
 bool BitSet::BiA::operator=(const bool value) {
     b_.bits_[i_] = value;
-    return bool(*this);
+    return static_cast<bool>(b_.bits_[i_]);
 }
 
 BitSet::BiA& BitSet::BiA::operator=(const BiA& bia) {

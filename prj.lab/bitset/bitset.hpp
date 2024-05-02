@@ -42,11 +42,17 @@ private:
         [[nodiscard]] BiA(const std::int32_t i, BitSet& b) : i_(i), b_{b} {}
         ~BiA() = default;
 
-        explicit operator bool();
+        [[nodiscard]] operator bool() const { return b_.Get(i_); }
         [[nodiscard]] bool operator=(const bool value);
         [[nodiscard]] BiA& operator=(const BiA& bia);
         [[nodiscard]] const bool operator= (const bool value) const;
         [[nodiscard]] const BiA& operator= (const BiA& bia) const;
+        bool operator==(const BiA& rhs);
+        bool operator==(const bool rhs);
+        bool operator!=(const BiA& rhs);
+        bool operator!=(const bool rhs);
+        bool operator==(const int rhs);
+        bool operator!=(const int rhs);
 
     private:
         BitSet& b_ ;

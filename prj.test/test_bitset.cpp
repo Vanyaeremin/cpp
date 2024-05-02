@@ -254,4 +254,10 @@ TEST_CASE("CHECK_BIA") {
     CHECK_EQ(b4.Get(1), 1);
     CHECK_EQ(b4.Get(8), 1);
     CHECK_EQ(b3.Get(9), 0);
+    CHECK_EQ(b3[0] == b3[1], 1);
+    CHECK_EQ(b3[0] != b3[1], 0);
+    CHECK_EQ(b3[0] == 1, 1);
+    CHECK_EQ(b3[0] == 0, 0);
+    CHECK_EQ(b3[0].operator bool(), true);
+    CHECK_EQ(operator bool(b3[0]), true);
 }
