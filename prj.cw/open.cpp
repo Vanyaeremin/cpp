@@ -1,4 +1,4 @@
-#include "opencv.hpp"
+#include "open.hpp"
 
 cv::Mat prepare(const cv::Mat& img) {
     cv::Mat imgGray, imgBlur, imgCanny, imgDil, imgErode;

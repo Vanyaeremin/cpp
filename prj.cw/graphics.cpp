@@ -1,6 +1,6 @@
 #include "graphics.hpp"
 
-std::string font_path = "C:/Users/vanyu/Documents/ÌÈÑÈÑ/Ïðîãà/PetProject/opencv1/ConsoleApplication2/ArialRegular.ttf";
+std::string font_path = "ArialRegular.ttf";
 
 Button::Button(const sf::String& text, const sf::Font& font, const sf::Vector2f& size, const int x, const int y) {
     this->text.setString(text);
@@ -184,7 +184,7 @@ void openStartWindow() {
 
             if (but3 == 1) {
                 OPENFILENAME ofn;
-                wchar_t szFile[260];
+                char szFile[260];
                 for (size_t i = 0; i < 260; ++i) {
                     szFile[i] = L'\0';
                 }
@@ -194,7 +194,7 @@ void openStartWindow() {
                 ofn.lpstrFile = szFile;
                 ofn.lpstrFile[0] = '\0';
                 ofn.nMaxFile = sizeof(szFile);
-                ofn.lpstrFilter = L"Image Files (*.jpg, *.png, *.bmp)\0*.jpg;*.png;*.bmp";
+                ofn.lpstrFilter = "Image Files (*.jpg, *.png, *.bmp)\0*.jpg;*.png;*.bmp";
                 ofn.nFilterIndex = 1;
                 ofn.lpstrFileTitle = NULL;
                 ofn.nMaxFileTitle = 0;
@@ -215,7 +215,7 @@ void openStartWindow() {
                 }
                 userText.setString(filepath);
                 for (size_t i = 0; i < 260; ++i) {
-                    szFile[i] = L'\0';
+                    szFile[i] = '\0';
                 }
                 filepath = "";
                 but3 = 0;

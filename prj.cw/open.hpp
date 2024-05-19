@@ -1,6 +1,6 @@
 #pragma once
-#ifndef OPENCV_HPP
-#define OPENCV_HPP
+#ifndef OPEN_HPP
+#define OPEN_HPP
 
 #include <cstddef>
 #include <vector>
