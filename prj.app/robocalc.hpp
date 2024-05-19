@@ -13,10 +13,10 @@ public:
     RoboCalc() = default;
     explicit RoboCalc(std::vector<std::string> commands): commands(commands) {}
     ~RoboCalc() = default;
-    int get_number();
-    void set_number(int commands);
-    std::vector<std::string> get_commands();
-    void set_commands(std::vector<std::string> commands);
+    int get_number() const noexcept;
+    void set_number(int commands) noexcept;
+    std::vector<std::string> get_commands() const noexcept;
+    void set_commands(std::vector<std::string> commands) noexcept;
 
 private:
     int number;
@@ -28,7 +28,7 @@ public:
     MUL() = default;
     MUL(RoboCalc& calc, int multiplier): calc(calc), multiplier(multiplier) {}
     ~MUL() = default;
-    void multiply();
+    void multiply() noexcept;
 
 private:
     RoboCalc& calc;
@@ -41,7 +41,7 @@ public:
     DIV(RoboCalc& calc, int divider) : calc(calc), divider_(divider) {}
     ~DIV() = default;
     void division();
-
+     
 private:
     RoboCalc& calc;
     int divider_;
@@ -52,7 +52,7 @@ public:
     SUB() = default;
     SUB(RoboCalc& calc, int deductible) : calc(calc), deductible_(deductible) {}
     ~SUB() = default;
-    void subtraction();
+    void subtraction() noexcept;
 
 private:
     RoboCalc& calc;
@@ -64,7 +64,7 @@ public:
     ADD() = default;
     ADD(RoboCalc& calc, int summand) : calc(calc), summand_(summand) {}
     ~ADD() = default;
-    void addition();
+    void addition() noexcept;
 
 private:
     RoboCalc& calc;
@@ -76,7 +76,7 @@ public:
     OUT() = default;
     OUT(RoboCalc& calc, int number) : calc(calc), number_(number) {}
     ~OUT() = default;
-    void out();
+    void out() noexcept;
 
 private:
     RoboCalc& calc;

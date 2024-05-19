@@ -1,6 +1,4 @@
 #include "robocalc.hpp"
-#include <filesystem>
-
 void StartProgram(std::string inputfile, std::string outputfile) {
 
     RoboCalc rc;
@@ -55,27 +53,27 @@ void StartProgram(std::string inputfile, std::string outputfile) {
     output.close();
 }
 
-void OUT::out() {
+void OUT::out() noexcept {
     calc.set_number(number_);
 }
 
-int RoboCalc::get_number() {
+int RoboCalc::get_number() const noexcept {
     return number;
  }
 
-void RoboCalc::set_number(int result) {
+void RoboCalc::set_number(int result) noexcept {
     number = result;
 }
 
-std::vector<std::string> RoboCalc::get_commands() {
+std::vector<std::string> RoboCalc::get_commands() const noexcept {
     return commands;
 }
 
-void RoboCalc::set_commands(std::vector<std::string> result) {
+void RoboCalc::set_commands(std::vector<std::string> result) noexcept {
     commands = result;
 }
 
-void MUL::multiply() {
+void MUL::multiply() noexcept {
     int result = calc.get_number() * multiplier;
     calc.set_number(result);
 }
@@ -91,12 +89,12 @@ void DIV::division() {
     }
 }
 
-void SUB::subtraction() {
+void SUB::subtraction() noexcept {
     int result = calc.get_number() - deductible_;
     calc.set_number(result);
 }
 
-void ADD::addition() {
+void ADD::addition() noexcept {
     int result = calc.get_number() + summand_;
     calc.set_number(result);
 }

@@ -5,6 +5,6 @@ target_include_directories(robocalc PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-add_executable(robocalc_start robocalc_start.cpp)
-target_link_libraries(robocalc_start robocalc)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT robocalc_start)
+add_executable(main "main.cpp")
+target_link_libraries(main robocalc)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT main)

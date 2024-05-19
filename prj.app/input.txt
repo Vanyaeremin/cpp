@@ -1,5 +1,0 @@
-MUL 10
-DIV 2
-SUB 6
-OUT 0 
-OUT 3
