@@ -4,9 +4,13 @@ void StartProgram(std::string inputfile, std::string outputfile) {
     RoboCalc rc;
     std::ifstream file(inputfile);
     std::ofstream output(outputfile);
-
-    if (!file.is_open()) {
-        std::cout << "ERR: Can not open file!";
+    try {
+        if (!file.is_open()) {
+            throw std::invalid_argument("ERR: Can not open file!\n");
+        }
+    }
+    catch (std::invalid_argument& e) {
+        std::cout << e.what();
         exit(1);
     }
     std::string line;
@@ -54,59 +58,71 @@ void StartProgram(std::string inputfile, std::string outputfile) {
 }
 
 void OUT::out() noexcept {
-    calc.set_number(number_);
+    calc_.set_number(number_);
 }
 
 int RoboCalc::get_number() const noexcept {
-    return number;
+    return number_;
  }
 
 void RoboCalc::set_number(int result) noexcept {
-    number = result;
+    number_ = result;
 }
 
 std::vector<std::string> RoboCalc::get_commands() const noexcept {
-    return commands;
+    return commands_;
 }
 
 void RoboCalc::set_commands(std::vector<std::string> result) noexcept {
-    commands = result;
+    commands_ = result;
 }
 
 void MUL::multiply() noexcept {
-    int result = calc.get_number() * multiplier;
-    calc.set_number(result);
+    int result = calc_.get_number() * multiplier_;
+    calc_.set_number(result);
 }
 
+
+
 void DIV::division() {
-    if (divider_ == 0) {
-        std::cout << "ERR: Division by zero";
-        exit(1);
+    try {
+        if (divider_ == 0) {
+            throw std::invalid_argument("ERR: Division by zero");
+        }
+        else {
+            int result = calc_.get_number() / divider_;
+            calc_.set_number(result);
+        }
     }
-    else {
-        int result = calc.get_number() / divider_;
-        calc.set_number(result);
+    catch (std::invalid_argument& e) {
+        std::cout << e.what();
+        exit(1);
     }
 }
 
 void SUB::subtraction() noexcept {
-    int result = calc.get_number() - deductible_;
-    calc.set_number(result);
+    int result = calc_.get_number() - deductible_;
+    calc_.set_number(result);
 }
 
 void ADD::addition() noexcept {
-    int result = calc.get_number() + summand_;
-    calc.set_number(result);
+    int result = calc_.get_number() + summand_;
+    calc_.set_number(result);
 }
 
 void REV::rev() {
-    std::vector<std::string> vec = calc.get_commands();
-    if (number_ <= vec.size() && number_ >= 0) {
-        vec.erase(vec.end() - number_, vec.end());
-        calc.set_commands(vec);
+    std::vector<std::string> vec = calc_.get_commands();
+    try {
+        if (number_ <= vec.size() && number_ >= 0) {
+            vec.erase(vec.end() - number_, vec.end());
+            calc_.set_commands(vec);
+        }
+        else {
+            throw std::invalid_argument("ERR: Invalid argument to REV command");
+        }
     }
-    else {
-        std::cout << "ERR: Invalid argument to REV command";
+    catch (std::invalid_argument& e) {
+        std::cout << e.what();
         exit(1);
     }
 
