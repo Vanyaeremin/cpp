@@ -29,7 +29,7 @@ private:
     std::ptrdiff_t capacity_ = 0;
     std::ptrdiff_t head_ = -1;
     std::ptrdiff_t tail_ = -1;
-    std::unique_ptr<Complex[]> data_ = std::make_unique<Complex[]>(capacity_);
+    std::unique_ptr<Complex[]> data_ = nullptr;
     std::ptrdiff_t Count() const {
         return IsEmpty() ? 0 : (tail_ + capacity_ - head_) % capacity_ + 1;
     };
