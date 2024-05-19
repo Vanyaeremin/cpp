@@ -152,3 +152,46 @@ BitSet operator^(const BitSet& lhs, const BitSet& rhs) {
     return result;
 }
 
+std::ostream& BitSet::WriteTxt(std::ostream& ostrm) const
+{
+    std::uint32_t c = 0;
+
+    ostrm << size_ << std::endl;
+    for (size_t i = 0; i != size_; ++i) {
+        ostrm << bits_[i];
+        if ((i + 1) % 20 == 0) {
+            ostrm << ' ' << c++ << std::endl;
+        }
+
+    }
+    if (size_ % 20 != 0) {
+        std::string end(20 - size_ % 20 + 1, ' ');
+        ostrm << end << c << std::endl;
+    }
+    return ostrm;
+}
+
+std::istream& BitSet::ReadTxt(std::istream& istrm)
+{
+    istrm >> size_;
+    std::string bits;
+    istrm >> bits;
+
+    if (bits.size() != size_) {
+        throw std::logic_error("Incorrect number of characters");
+    }
+
+    if (istrm.good()) {
+        for (char const& c : bits) {
+            if (!istrm || (c != '1' && c != '0')) {
+                istrm.setstate(std::ios_base::failbit);
+                return istrm;
+            }
+            else {
+                bits_.push_back(c - '0');
+            }
+        }
+    }
+
+    return istrm;
+}

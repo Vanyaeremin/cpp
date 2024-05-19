@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
+#include <iosfwd>
 
 class BitSet {
 private:
@@ -34,6 +35,11 @@ public:
     [[nodiscard]] BitSet& operator&=(const BitSet& rhs);
     [[nodiscard]] BitSet& operator^=(const BitSet& rhs);
     std::vector<std::uint32_t> same_size(const BitSet& v1, const BitSet& v2);
+
+    std::ostream& WriteTxt(std::ostream& ostrm) const;
+    //std::ostream& WriteBinary(std::ostream&);
+    std::istream& ReadTxt(std::istream& istrm);
+    //std::istream& ReadBinary(std::istream&);
 
 private:
     class BiA {
@@ -67,5 +73,13 @@ private:
 [[nodiscard]] BitSet operator|(const BitSet& lhs, const BitSet& rhs);
 
 [[nodiscard]] BitSet operator^(const BitSet& lhs, const BitSet& rhs);
+
+inline std::ostream& operator<<(std::ostream& ostrm, const BitSet& rhs) {
+    return rhs.WriteTxt(ostrm);
+}
+
+inline std::istream& operator>>(std::istream& istrm, BitSet& rhs) {
+    return rhs.ReadTxt(istrm);
+}
 
 #endif
