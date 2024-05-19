@@ -21,6 +21,7 @@ enable_testing()
 
 add_subdirectory(prj.lab)
 add_subdirectory(prj.test)
+add_subdirectory(prj.app)
 
 if (BUILD_WITH_SAMPLES)
   add_subdirectory(prj.cw)
