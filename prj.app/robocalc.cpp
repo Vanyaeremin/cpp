@@ -19,24 +19,24 @@ void StartProgram(std::string inputfile, std::string outputfile) {
         int number = std::stoi(line.substr(4));
         if (line.substr(0, 3) == "OUT") {
             OUT out(rc, number);
-            out.out();
+            out.execute();
             for (std::string str : rc.get_commands()) {
                 int num = std::stoi(str.substr(4));
                 if (str.substr(0, 3) == "MUL") {
                     MUL mul(rc, num);
-                    mul.multiply();
+                    mul.execute();
                 }
                 else if (str.substr(0, 3) == "DIV") {
                     DIV div(rc, num);
-                    div.division();
+                    div.execute();
                 }
                 else if (str.substr(0, 3) == "ADD") {
                     ADD add(rc, num);
-                    add.addition();
+                    add.execute();
                 }
                 else if (str.substr(0, 3) == "SUB") {
                     SUB sub(rc, num);
-                    sub.subtraction();
+                    sub.execute();
                 }
             }
             output << rc.get_number() << std::endl;
@@ -44,7 +44,7 @@ void StartProgram(std::string inputfile, std::string outputfile) {
         else {
             if (line.substr(0, 3) == "REV") {
                 REV rev(rc, number);
-                rev.rev();
+                rev.execute();
             }
             else {
                 std::vector<std::string> com = rc.get_commands();
@@ -57,7 +57,7 @@ void StartProgram(std::string inputfile, std::string outputfile) {
     output.close();
 }
 
-void OUT::out() noexcept {
+void OUT::execute() noexcept {
     calc_.set_number(number_);
 }
 
@@ -77,14 +77,14 @@ void RoboCalc::set_commands(std::vector<std::string> result) noexcept {
     commands_ = result;
 }
 
-void MUL::multiply() noexcept {
+void MUL::execute() noexcept {
     int result = calc_.get_number() * multiplier_;
     calc_.set_number(result);
 }
 
 
 
-void DIV::division() {
+void DIV::execute() {
     try {
         if (divider_ == 0) {
             throw std::invalid_argument("ERR: Division by zero");
@@ -100,17 +100,17 @@ void DIV::division() {
     }
 }
 
-void SUB::subtraction() noexcept {
+void SUB::execute() noexcept {
     int result = calc_.get_number() - deductible_;
     calc_.set_number(result);
 }
 
-void ADD::addition() noexcept {
+void ADD::execute() noexcept {
     int result = calc_.get_number() + summand_;
     calc_.set_number(result);
 }
 
-void REV::rev() {
+void REV::execute() {
     std::vector<std::string> vec = calc_.get_commands();
     try {
         if (number_ <= vec.size() && number_ >= 0) {
