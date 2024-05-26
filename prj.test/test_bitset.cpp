@@ -260,3 +260,40 @@ TEST_CASE("CHECK_BIA") {
     CHECK_EQ(b3[0] == 0, 0);
     CHECK_EQ(b3[0].operator bool(), true);
 }
+
+TEST_CASE("CHECK_OPERATOR=") {
+    BitSet b3(4);
+    b3.Set(0, 1);
+    b3.Set(1, 0);
+    b3.Set(2, 1);
+    b3.Set(3, 0);
+    BitSet b4(4);
+    b4.Set(0, 0);
+    b4.Set(1, 1);
+    b4.Set(2, 0);
+    b4.Set(3, 1);
+    CHECK_EQ(b3[0] == 1, 1);
+    CHECK_EQ(b3[1] == 0, 1);
+    CHECK_EQ(b4[0] == 0, 1);
+    CHECK_EQ(b4[1] == 1, 1);
+
+    b3[0] = b4[0];
+    b4[1] = b3[1];
+    CHECK_EQ(b3[0] == 0, 1);
+    CHECK_EQ(b3[1] == 0, 1);
+    CHECK_EQ(b4[0] == 0, 1);
+    CHECK_EQ(b4[1] == 0, 1);
+
+    BitSet b5(4);
+    b5.Set(0, 1);
+    b5.Set(1, 1);
+    b5.Set(2, 0);
+    b5.Set(3, 0);
+    CHECK_EQ(b5[0] == 1, 1);
+    CHECK_EQ(b3[0] == 0, 1);
+    CHECK_EQ(b4[0] == 0, 1);
+    b3[0] = b4[0] = b5[0];
+    CHECK_EQ(b3[0] == 1, 1);
+    CHECK_EQ(b4[0] == 1, 1);
+    CHECK_EQ(b5[0] == 1, 1);
+}
