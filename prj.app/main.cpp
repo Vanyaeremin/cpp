@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
         StartProgram(inputFile, outputFile);
     }
     catch (std::invalid_argument& e) {
-        std::cout << e.what();
+        std::cout << e.what() << std::endl;
         exit(1);
     }
 }
