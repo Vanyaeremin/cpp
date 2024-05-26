@@ -29,14 +29,17 @@ void StartProgram(std::string inputfile, std::string outputfile) {
             std::vector<RoboCalc*> commands = rc.get_commands();
             for (RoboCalc* com : commands) {
                 com->execute();
-                delete com;
             }
             output << rc.get_number() << std::endl;
+            delete cmd;
+            cmd = nullptr;
         }
 
         else if (command == "REV") {
             cmd = new REV(rc, number);
             cmd->execute();
+            delete cmd;
+            cmd = nullptr;
         } 
 
         else {
@@ -65,7 +68,6 @@ void StartProgram(std::string inputfile, std::string outputfile) {
                 exit(1);
             }
         }
-        delete cmd;
     }    
     file.close();
     output.close();
