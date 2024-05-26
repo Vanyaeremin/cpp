@@ -1,6 +1,6 @@
 #include "graphics.hpp"
 
-std::string font_path = "ArialRegular.ttf";
+std::string font_path = "C:/Users/vanyu/Documents/ÌÈÑÈÑ/Ïðîãà/ÎÎÏ/bin.dbg/ArialRegular.ttf";
 
 Button::Button(const sf::String& text, const sf::Font& font, const sf::Vector2f& size, const int x, const int y) {
     this->text.setString(text);
@@ -9,11 +9,7 @@ Button::Button(const sf::String& text, const sf::Font& font, const sf::Vector2f&
     this->text.setCharacterSize(50);
     this->shape.setSize(size);
     this->shape.setPosition(x, y);
-    float textWidth = this->text.getGlobalBounds().width;
-    float textH = this->text.getGlobalBounds().height;
-    float screenCenterX = size.x / 2;
-    float screenCenterY = size.y / 2;
-    this->text.setPosition(-4 + x + (screenCenterX - textWidth) / 2, -16 + y + (screenCenterY - textH) / 2);
+    this->text.setPosition(x, y);
     this->size = size;
 }
 
@@ -36,8 +32,13 @@ void Button::setAction(std::function<void()> action) {
     this->action = action;
 }
 
+sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+unsigned int screen_x = desktop.width;
+unsigned int screen_y = desktop.height;
+
 void openResultWindow(std::string& new_filename) {
-    sf::RenderWindow window_result(sf::VideoMode(1920, 1080), "Result");
+    sf::RenderWindow window_result(sf::VideoMode(screen_x, screen_y), "Result");
+
     sf::Texture texture;
     texture.loadFromFile(new_filename);
     sf::Sprite sprite(texture);
@@ -52,15 +53,15 @@ void openResultWindow(std::string& new_filename) {
     title.setCharacterSize(40);
     title.setFillColor(sf::Color::Black);
     title.setStyle(sf::Text::Bold);
-    title.setPosition(960, 340);
+    title.setPosition(screen_x * 0.25 - title.getGlobalBounds().width / 2 + screen_x*0.5, screen_y*0.3);
 
     bool but11 = 0;
     bool but12 = 0;
 
-    Button button11("Delete", font, sf::Vector2f(300, 100), 1105, 490);
+    Button button11("Delete", font, sf::Vector2f(300, 100), screen_x * 0.5+(screen_x*0.5-600)/2, screen_y*0.5);
     button11.setAction([&but11]() { but11 = 1; });
 
-    Button button12("Exit (Esc)", font, sf::Vector2f(300, 100), 1405, 490);
+    Button button12("Exit (Esc)", font, sf::Vector2f(300, 100), screen_x * 0.5 + 300 + (screen_x * 0.5 - 600) / 2, screen_y * 0.5);
     button12.setAction([&but12]() { but12 = 1; });
 
     while (window_result.isOpen())
@@ -81,6 +82,9 @@ void openResultWindow(std::string& new_filename) {
                 window_result.close();
                 but12 = 0;
             }
+            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                window_result.close();
+            }
         }
         window_result.clear(sf::Color::White);
         window_result.draw(sprite);
@@ -92,7 +96,8 @@ void openResultWindow(std::string& new_filename) {
 }
 
 void openStartWindow() {
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Text Segmentation");
+    sf::RenderWindow window(sf::VideoMode(screen_x, screen_y), "Text Segmentation");
+
     sf::Text text;
     sf::Text text2;
     sf::Text texter;
@@ -107,23 +112,17 @@ void openStartWindow() {
     bool but4 = 0;
 
 
-    Button button("Segmentation", font, sf::Vector2f(480, 100), 10, 490);
+    Button button("Segmentation", font, sf::Vector2f(460, 100), (screen_x * 0.25 - 460)/2, screen_y * 0.5);
     button.setAction([&but1]() { but1 = 1; });
 
-    Button button1("Exit (Esc)", font, sf::Vector2f(480, 100), 10, 590);
+    Button button1("Exit (Esc)", font, sf::Vector2f(460, 100), (screen_x * 0.25 - 460) / 2, screen_y * 0.5 + 100);
     button1.setAction([&but2]() { but2 = 1; });
 
-    Button button2("Overview", font, sf::Vector2f(480, 100), 10, 390);
+    Button button2("Overview", font, sf::Vector2f(460, 100), (screen_x * 0.25 - 460) / 2, screen_y * 0.5 - 100);
     button2.setAction([&but3]() { but3 = 1; });
 
-    Button button3("X", font, sf::Vector2f(50, 50), 1833, 495);
+    Button button3("X", font, sf::Vector2f(50, 50), screen_x * 0.95, screen_y * 0.5 - 5);
     button3.setAction([&but4]() { but4 = 1; });
-
-
-    float screenWidth = window.getSize().x;
-    float screenWidthY = window.getSize().y;
-    float textWidth1;
-    float screenCenterX1;
 
     texter.setFont(font);
     texter.setCharacterSize(50);
@@ -137,31 +136,31 @@ void openStartWindow() {
     text.setFillColor(sf::Color::Black);
     text.setStyle(sf::Text::Bold);
     float textWidth = text.getGlobalBounds().width;
-    float screenCenterX = (screenWidth - 500) / 2;
-    text.setPosition(screenCenterX - textWidth / 2 + 500, 0);
+    float screenCenterX = (screen_x - screen_x * 0.25) / 2;
+    text.setPosition(screenCenterX - textWidth / 2 + screen_x * 0.25, 0);
 
     userText.setFont(font);
     userText.setCharacterSize(50);
     userText.setFillColor(sf::Color::Black);
     textWidth = userText.getGlobalBounds().width;
-    userText.setPosition(520, 488);
+    userText.setPosition(screen_x * 0.25 + 20, screen_y * 0.5 - 5);
 
     text2.setFont(font);
     text2.setString("Enter the path to the image");
     text2.setCharacterSize(50);
     text2.setFillColor(sf::Color::Black);
     text2.setStyle(sf::Text::Bold);
-    textWidth1 = text2.getGlobalBounds().width;
-    text2.setPosition(screenCenterX - textWidth1 / 2 + 500, 560);
+    float textWidth1 = text2.getGlobalBounds().width;
+    text2.setPosition(screenCenterX - textWidth1 / 2 + screen_x * 0.25, screen_y * 0.5 + 60);
 
     text3.setFont(font);
     text3.setString("_______________________________________________");
     text3.setCharacterSize(50);
     text3.setFillColor(sf::Color::Black);
     text3.setStyle(sf::Text::Bold);
-    text3.setPosition(520, 490);
+    text3.setPosition(screen_x * 0.25 + 20, screen_y * 0.5);
 
-    sf::RectangleShape rectangle(sf::Vector2f(500, 1080));
+    sf::RectangleShape rectangle(sf::Vector2f(screen_x*0.25, screen_y));
     rectangle.setFillColor(sf::Color(100, 250, 50));
 
     bool er = 0;
@@ -214,6 +213,7 @@ void openStartWindow() {
                     }
                 }
                 userText.setString(filepath);
+                texter.setString("");
                 for (size_t i = 0; i < 260; ++i) {
                     szFile[i] = '\0';
                 }
@@ -226,6 +226,7 @@ void openStartWindow() {
 
                 if (allowedCharacters.find(character) != std::string::npos) {
                     userText.setString(userText.getString() + character);
+                    texter.setString("");
                 }
             }
             else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Backspace) {
@@ -233,6 +234,7 @@ void openStartWindow() {
                 if (!text.empty()) {
                     text.pop_back();
                     userText.setString(text);
+                    texter.setString("");
                 }
             }
             else if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) || but1 == 1) {
@@ -241,7 +243,7 @@ void openStartWindow() {
                 if (img.empty()) {
                     texter.setString("The path to the file is incorrect");
                     texter.setFillColor(sf::Color::Red);
-                    texter.setPosition(865, 630);
+                    texter.setPosition(screen_x * 0.25 + 20, screen_y * 0.5 - 5);
                     userText.setString("");
                     but1 = 0;
                 }
@@ -256,13 +258,14 @@ void openStartWindow() {
                     std::string extension = dir.substr(dir.find_last_of('.'));
                     std::string new_filename = filename + "_segmentation" + extension;
                     cv::imwrite(new_filename, output);
-
+                    texter.setString("");
                     openResultWindow(new_filename);
                     but1 = 0;
                 }
             }
             else if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Delete) || but4 == 1) {
                 userText.setString("");
+                texter.setString("");
                 but4 = 0;
             }
             else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
@@ -277,6 +280,7 @@ void openStartWindow() {
                     }
                     sf::String buf(s1);
                     userText.setString(userText.getString() + buf);
+                    texter.setString("");
                     event.key.control = false;
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
