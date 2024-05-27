@@ -4,7 +4,6 @@
 
 #include <stdexcept>
 #include <fstream>
-#include <memory>
 #include <sstream>
 #include <iostream>
 #include <vector>
