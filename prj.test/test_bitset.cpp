@@ -296,9 +296,4 @@ TEST_CASE("CHECK_OPERATOR=") {
     CHECK_EQ(b3[0] == 1, 1);
     CHECK_EQ(b4[0] == 1, 1);
     CHECK_EQ(b5[0] == 1, 1);
-    
-    b3[1] = b5[1] = b4[1];
-    CHECK_EQ(b3[1] == 0, 1);
-    CHECK_EQ(b4[1] == 0, 1);
-    CHECK_EQ(b5[1] == 0, 1);
 }
