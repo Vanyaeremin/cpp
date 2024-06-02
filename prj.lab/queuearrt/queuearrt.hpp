@@ -21,8 +21,8 @@ public:
     void Push(const T& c);
     void Pop() noexcept;
     void Clear() noexcept;
-    [[nodiscard]] T& Top()&;
-    [[nodiscard]] const T& Top() const&;
+    T& Top()&;
+    const T& Top() const&;
     bool IsEmpty() const noexcept;
 
 private:

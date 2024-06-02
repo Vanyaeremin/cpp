@@ -25,8 +25,8 @@ public:
     [[nodiscard]] std::ptrdiff_t Size() const noexcept;
     void Resize(const std::ptrdiff_t size);
 
-    [[nodiscard]] T& operator[](const std::ptrdiff_t i);
-    [[nodiscard]] const T& operator[](const std::ptrdiff_t i) const;
+    T& operator[](const std::ptrdiff_t i);
+    const T& operator[](const std::ptrdiff_t i) const;
 
 private:
     std::ptrdiff_t size_ = 0;
@@ -78,8 +78,8 @@ DynArrT<T>& DynArrT<T>::operator=(const DynArrT<T>& d) noexcept {
         }
         std::copy(d.data_.get(), d.data_.get() + d.size_, data_.get());
         size_ = d.size_;
-        return *this;
     }
+    return *this;
 }
 
 template <class T>

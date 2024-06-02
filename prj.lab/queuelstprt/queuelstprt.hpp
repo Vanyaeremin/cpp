@@ -22,8 +22,8 @@ public:
     void Pop() noexcept;
     void Clear() noexcept;
     bool IsEmpty() const noexcept;
-    [[nodiscard]] T& Top()&;
-    [[nodiscard]] const T& Top() const&;
+    T& Top()&;
+    const T& Top() const&;
 
 private:
     struct Node {

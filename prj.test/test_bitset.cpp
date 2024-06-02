@@ -2,7 +2,7 @@
 #include "doctest.h"
 #include <bitset/bitset.hpp>
 
-TEST_CASE("bitset ctor") {
+TEST_CASE("bitset ctor1") {
     BitSet b1;
     CHECK_EQ(b1.Size(), 0);
     CHECK_THROWS(b1.Get(0));
@@ -85,7 +85,8 @@ TEST_CASE("bitset ctor") {
     CHECK_EQ(b33.Get(8), 0);
     CHECK_EQ(b33.Get(9), 0);
     CHECK_EQ(~b1 != ~b2, 1);
-
+}
+TEST_CASE("Bitset2") {
     BitSet b3(13);
     b3.Set(0, 1);
     b3.Set(1, 0);

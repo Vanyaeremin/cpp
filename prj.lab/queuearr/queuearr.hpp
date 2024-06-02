@@ -21,8 +21,8 @@ public:
     void Push(const Complex& c);
     void Pop() noexcept;
     void Clear() noexcept;
-    [[nodiscard]] Complex& Top() &;
-    [[nodiscard]] const Complex& Top() const &;
+    Complex& Top() &;
+    const Complex& Top() const &;
     bool IsEmpty() const noexcept;
 
 private:

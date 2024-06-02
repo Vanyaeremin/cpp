@@ -25,40 +25,40 @@ public:
     [[nodiscard]] bool operator!=(const BitSet& rhs) const noexcept;
     std::int32_t Size() const noexcept { return size_; }
     void Resize(const std::int32_t size);
-    [[nodiscard]] bool Get(const int32_t idx) const;
+    bool Get(const int32_t idx) const;
     void Set(const int32_t idx, const bool val);
     void Fill(const bool val) noexcept;
     BiA operator[](int32_t i);
 
-    [[nodiscard]] BitSet operator~();
-    [[nodiscard]] BitSet& operator|=(const BitSet& rhs);
-    [[nodiscard]] BitSet& operator&=(const BitSet& rhs);
-    [[nodiscard]] BitSet& operator^=(const BitSet& rhs);
+    BitSet operator~();
+    BitSet& operator|=(const BitSet& rhs);
+    BitSet& operator&=(const BitSet& rhs);
+    BitSet& operator^=(const BitSet& rhs);
     std::vector<std::uint32_t> same_size(const BitSet& v1, const BitSet& v2);
 
-    std::ostream& WriteTxt(std::ostream& ostrm) const;
+    [[nodiscard]] std::ostream& WriteTxt(std::ostream& ostrm) const;
     //std::ostream& WriteBinary(std::ostream&);
-    std::istream& ReadTxt(std::istream& istrm);
+    [[nodiscard]] std::istream& ReadTxt(std::istream& istrm);
     //std::istream& ReadBinary(std::istream&);
 
 private:
     class BiA {
     public:
-        [[nodiscard]] BiA() = default;
-        [[nodiscard]] BiA(const std::int32_t i, BitSet& b) : i_(i), b_{b} {}
+        BiA() = default;
+        BiA(const std::int32_t i, BitSet& b) : i_(i), b_{b} {}
         ~BiA() = default;
 
-        [[nodiscard]] operator bool() const { return b_.Get(i_); }
-        [[nodiscard]] bool operator=(const bool value);
-        [[nodiscard]] BiA& operator=(const BiA& bia);
-        [[nodiscard]] const bool operator= (const bool value) const;
-        [[nodiscard]] const BiA& operator= (const BiA& bia) const;
-        bool operator==(const BiA& rhs);
-        bool operator==(const bool rhs);
-        bool operator!=(const BiA& rhs);
-        bool operator!=(const bool rhs);
-        bool operator==(const int rhs);
-        bool operator!=(const int rhs);
+        operator bool() const { return b_.Get(i_); }
+        bool operator=(const bool value);
+        BiA& operator=(const BiA& bia);
+        const bool operator= (const bool value) const;
+        const BiA& operator= (const BiA& bia) const;
+        [[nodiscard]] bool operator==(const BiA& rhs);
+        [[nodiscard]] bool operator==(const bool rhs);
+        [[nodiscard]] bool operator!=(const BiA& rhs);
+        [[nodiscard]] bool operator!=(const bool rhs);
+        [[nodiscard]] bool operator==(const int rhs);
+        [[nodiscard]] bool operator!=(const int rhs);
 
     private:
         BitSet& b_ ;
@@ -68,11 +68,11 @@ private:
     std::vector<std::uint32_t> bits_;
 };
 
-[[nodiscard]] BitSet operator&(const BitSet& lhs, const BitSet& rhs);
+BitSet operator&(const BitSet& lhs, const BitSet& rhs);
 
-[[nodiscard]] BitSet operator|(const BitSet& lhs, const BitSet& rhs);
+BitSet operator|(const BitSet& lhs, const BitSet& rhs);
 
-[[nodiscard]] BitSet operator^(const BitSet& lhs, const BitSet& rhs);
+BitSet operator^(const BitSet& lhs, const BitSet& rhs);
 
 inline std::ostream& operator<<(std::ostream& ostrm, const BitSet& rhs) {
     return rhs.WriteTxt(ostrm);

@@ -21,8 +21,8 @@ StackArr& StackArr::operator=(const StackArr& rhs) noexcept {
         std::copy(rhs.data_.get(), rhs.data_.get() + rhs.size_, data_.get());
         i_top_ = rhs.i_top_;
         size_ = rhs.size_;
-        return *this;
     }
+    return *this;
 }
 
 StackArr& StackArr::operator=(StackArr&& rhs) noexcept {

@@ -20,8 +20,8 @@ public:
     void Push(const T& c);
     void Pop() noexcept;
     bool IsEmpty() const noexcept;
-    [[nodiscard]] T& Top()&;
-    [[nodiscard]] const T& Top() const&;
+    T& Top()&;
+    const T& Top() const&;
     void Clear() noexcept;
 
 private:

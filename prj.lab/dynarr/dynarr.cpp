@@ -40,8 +40,8 @@ DynArr& DynArr::operator=(const DynArr& d) noexcept {
         }
         std::copy(d.data_.get(), d.data_.get() + d.size_, data_.get());
         size_ = d.size_;
-        return *this;
     }
+    return *this;
 }
 
 DynArr& DynArr::operator=(DynArr&& d) noexcept {

@@ -22,8 +22,8 @@ public:
     bool IsEmpty() const noexcept;
     void Pop() noexcept;
     void Push(const Complex& el);
-    [[nodiscard]] Complex& Top() &;
-    [[nodiscard]] const Complex& Top() const &;
+    Complex& Top() &;
+    const Complex& Top() const &;
     void Clear() noexcept;
 
 private:

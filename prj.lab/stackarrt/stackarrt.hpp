@@ -22,8 +22,8 @@ public:
     bool IsEmpty() const noexcept;
     void Pop() noexcept;
     void Push(const T& el);
-    [[nodiscard]] T& Top()&;
-    [[nodiscard]] const T& Top() const&;
+    T& Top()&;
+    const T& Top() const&;
     void Clear() noexcept;
 
 private:
@@ -56,8 +56,8 @@ StackArrT<T>& StackArrT<T>::operator=(const StackArrT<T>& rhs) noexcept {
         std::copy(rhs.data_.get(), rhs.data_.get() + rhs.size_, data_.get());
         i_top_ = rhs.i_top_;
         size_ = rhs.size_;
-        return *this;
     }
+    return *this;
 }
 
 template <class T>

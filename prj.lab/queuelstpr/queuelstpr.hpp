@@ -20,12 +20,12 @@ public:
     void Pop() noexcept;
     void Clear() noexcept;
     bool IsEmpty() const noexcept;
-    [[nodiscard]] float& Top() &;
-    [[nodiscard]] const float& Top() const &;
+    float& Top() &;
+    const float& Top() const &;
 
 private:
     struct Node {
-        float f;
+        float f = 0;
         Node* next = nullptr;
         Node(const float& item) : f(item) {}
         Node() = default;

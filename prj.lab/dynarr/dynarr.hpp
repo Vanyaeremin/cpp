@@ -24,8 +24,8 @@ public:
     [[nodiscard]] std::ptrdiff_t Size() const noexcept;
     void Resize(const std::ptrdiff_t size);
 
-    [[nodiscard]] float& operator[](const std::ptrdiff_t i);
-    [[nodiscard]] const float& operator[](const std::ptrdiff_t i) const;
+    float& operator[](const std::ptrdiff_t i);
+    const float& operator[](const std::ptrdiff_t i) const;
 
 private:
     std::ptrdiff_t size_ = 0;
