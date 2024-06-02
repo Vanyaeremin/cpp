@@ -1,4 +1,7 @@
 #include "robocalc.hpp"
+
+std::vector<std::unique_ptr<RoboCalc>> commands;
+
 void StartProgram(std::string inputfile, std::string outputfile) {
 
     RoboCalc rc;
@@ -21,47 +24,39 @@ void StartProgram(std::string inputfile, std::string outputfile) {
         std::string command;
         double number;
         iss >> command >> number;
-        RoboCalc* cmd = nullptr;
+        std::unique_ptr<RoboCalc> cmd = nullptr;
 
         if (command == "OUT") {
-            cmd = new OUT(rc, number);
+            cmd = std::make_unique<OUT>(rc, number);
             cmd->execute();
-            std::vector<RoboCalc*> commands = rc.get_commands();
-            for (RoboCalc* com : commands) {
+            for (const auto& com : commands) {
                 com->execute();
             }
             output << rc.get_number() << std::endl;
-            delete cmd;
-            cmd = nullptr;
         }
 
         else if (command == "REV") {
-            cmd = new REV(rc, number);
+            cmd = std::make_unique<REV>(rc, number);
             cmd->execute();
-            delete cmd;
-            cmd = nullptr;
         } 
 
         else {
             try {
                 if (command == "MUL") {
-                    cmd = new MUL(rc, number);
+                    commands.push_back(std::make_unique <MUL>(rc, number));
                 }
                 else if (command == "DIV") {
-                    cmd = new DIV(rc, number);
+                    commands.push_back(std::make_unique <DIV>(rc, number));
                 }
                 else if (command == "ADD") {
-                    cmd = new ADD(rc, number);
+                    commands.push_back(std::make_unique <ADD>(rc, number));
                 }
                 else if (command == "SUB") {
-                    cmd = new SUB(rc, number);
+                    commands.push_back(std::make_unique <SUB>(rc, number));
                 }
                 else {
                     throw std::invalid_argument("ERR: Wrong command");
                 }
-                std::vector<RoboCalc*> com = rc.get_commands();
-                com.push_back(cmd);
-                rc.set_commands(com);
             }
             catch (std::invalid_argument& e) {
                 std::cout << e.what() << std::endl;
@@ -83,14 +78,6 @@ int RoboCalc::get_number() const noexcept {
 
 void RoboCalc::set_number(int result) noexcept {
     number_ = result;
-}
-
-std::vector<RoboCalc*> RoboCalc::get_commands() const noexcept {
-    return commands_;
-}
-
-void RoboCalc::set_commands(std::vector<RoboCalc*> result) noexcept {
-    commands_ = result;
 }
 
 void MUL::execute() {
@@ -125,11 +112,9 @@ void ADD::execute() {
 }
 
 void REV::execute() {
-    std::vector<RoboCalc*> vec = calc_.get_commands();
     try {
-        if (number_ <= vec.size() && number_ >= 0) {
-            vec.erase(vec.end() - number_, vec.end());
-            calc_.set_commands(vec);
+        if (number_ <= commands.size() && number_ >= 0) {
+            commands.erase(commands.end() - number_, commands.end());
         }
         else {
             throw std::invalid_argument("ERR: Invalid argument to REV command");

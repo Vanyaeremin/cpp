@@ -8,21 +8,18 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <memory>
 
 class RoboCalc {
 public:
     RoboCalc() = default;
-    explicit RoboCalc(std::vector<RoboCalc*> commands): commands_(commands) {}
     ~RoboCalc() = default;
     int get_number() const noexcept;
     void set_number(int commands) noexcept;
-    std::vector<RoboCalc*> get_commands() const noexcept;
-    void set_commands(std::vector<RoboCalc*> commands) noexcept;
     virtual void execute() {}
 
 private:
     int number_ = 0;
-    std::vector<RoboCalc*> commands_;
 };
 
 class MUL : public RoboCalc {
